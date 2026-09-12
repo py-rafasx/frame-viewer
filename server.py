@@ -36,8 +36,16 @@ SCRIPT_DIR = Path(__file__).parent.absolute()
 os.chdir(SCRIPT_DIR)
 
 class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
-    """Custom request handler with CORS headers and better error messages."""
-    
+    """Custom request handler with CORS headers, no-cache and dotfile blocking."""
+
+    def translate_path(self, path):
+        """Block hidden files/folders (.git, etc.) from being served."""
+        path = super().translate_path(path)
+        rel = os.path.relpath(path, SCRIPT_DIR)
+        if any(part.startswith('.') for part in rel.split(os.sep)):
+            return os.path.join(SCRIPT_DIR, '__blocked__')
+        return path
+
     def end_headers(self):
         # Add CORS headers to allow cross-origin requests
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -127,7 +135,7 @@ def start_server():
     Returns:
         The HTTP server instance
     """
-    httpd = socketserver.TCPServer(("", PORT), MyHTTPRequestHandler)
+    httpd = socketserver.TCPServer(("127.0.0.1", PORT), MyHTTPRequestHandler)  # localhost apenas
     httpd.allow_reuse_address = True  # Allow address reuse for quick restarts
     
     print("=" * 60)
