@@ -1,25 +1,25 @@
 # Frieren Frame Viewer
 
-Um jeito simples de navegar pelos frames de Frieren, episódio por episódio. Cada frame é um momento: o app mostra o número do frame, o tempo aproximado, e dá pra pular direto, sortear, arrastar o progresso ou baixar a imagem. A URL guarda o momento — dá pra mandar `?season=1&episode=7&frame=1234` e a pessoa abre exatamente ali.
+A simple way to browse Frieren frames, episode by episode. Every frame is a moment: the app shows the frame number and an estimated timestamp, and you can jump straight to a frame, shuffle, drag the progress bar or download the image. The URL keeps the moment — share `?season=1&episode=7&frame=1234` and the person opens exactly there.
 
-**Ao vivo:** https://javaraf.github.io/frame-viewer/
+**Live:** https://javaraf.github.io/frame-viewer/
 
-O `index.html` da raiz decide sozinho se abre a versão **desktop** (tela cheia, teclado) ou **mobile** (otimizada para toque, com swipe). Não tem tutorial porque não precisa: os botões fazem o que parecem.
+The root `index.html` decides on its own whether to open the **desktop** version (fullscreen, keyboard) or the **mobile** version (touch-first, with swipe navigation). There is no tutorial because there's no need: the buttons do what they look like.
 
-## Rodando local
+## Running locally
 
 ```bash
 python server.py
 ```
 
-Depois http://localhost:8000/ — mesma coisa que o site, só que da sua máquina. (O servidor só escuta em `127.0.0.1`, esconde arquivos ocultos e não guarda cache: recarregou, viu a versão nova.)
+Then http://localhost:8000/ — same thing as the site, but from your machine. (The server only listens on `127.0.0.1`, hides dotfiles and sends no-cache headers: refresh and you get the latest files.)
 
-## Usando seus próprios frames (fork)
+## Using your own frames (fork)
 
-O app é só HTML/JS estático — o segredo é onde as imagens moram. Elas são servidas de um repositório GitHub organizado assim:
+The app is plain static HTML/JS — the trick is where the images live. They are served from a GitHub repository organized like this:
 
 ```
-seu-repo/
+your-repo/
 └── 01/0001.jpg
    0002.jpg
    ...
@@ -27,48 +27,49 @@ seu-repo/
    ...
 ```
 
-Ou seja: uma pasta por episódio (com dois dígitos), e dentro os frames `0001.jpg`, `0002.jpg`, ... (quatro dígitos).
+One folder per episode (two digits), and inside it the frames `0001.jpg`, `0002.jpg`, ... (four digits).
 
-No fork, abra `frame-viewer.js` e ajuste o mapa `seasons` no topo:
+After forking, open `static/js/frame-viewer.js` and edit the `seasons` map at the top:
 
 ```js
 const seasons = {
     "1": {
         name: "Season 1",
-        user_name: "seu-usuario",
-        repo: "seu-repo-de-frames",
+        user_name: "your-user",
+        repo: "your-frames-repo",
         branch: "main",
-        img_fps: 3.5,            // fps da captura — usado só pra estimar o timestamp
+        img_fps: 3.5,           // capture fps — used only to estimate the timestamp
         episodes: {
-            1: { name: "Episode 1", frames: 5460 },  // frames = quantos arquivos tem na pasta 01
+            1: { name: "Episode 1", frames: 5460 },  // frames = how many files are in folder 01
             2: { name: "Episode 2", frames: 5300 },
         }
     },
 };
 ```
 
-- `user_name` + `repo` + `branch` definem de onde vêm as imagens.
-- `frames` por episódio precisa bater com a contagem real de arquivos da pasta.
-- Publique no GitHub Pages (Settings → Pages → branch `main`) e pronto.
+- `user_name` + `repo` + `branch` tell the app where the images come from.
+- `frames` per episode must match the real file count in that folder.
+- Publish on GitHub Pages (Settings → Pages → branch `main`) and you're done.
 
-As imagens tentam carregar direto do GitHub raw; se falhar (rate-limit, rede), caem num proxy público como fallback. Pra fork pequeno isso resolve bem.
+Images try to load straight from GitHub raw; if that fails (rate limit, network), they fall back to a public proxy. For a small fork this works well.
 
-## Estrutura
+## Structure
 
 ```
-├── index.html / main.js     Roteador: abre desktop ou mobile conforme o dispositivo
-├── frame-viewer.js          Toda a lógica (desktop e mobile usam o mesmo arquivo)
-├── desktop/index.html       Versão desktop (Editorial+)
-├── mobile/index.html        Versão mobile (Stack)
-├── static/                  Fundo e favicon
-└── server.py                Servidor local de testes
+├── index.html / main.js     Router: opens desktop or mobile depending on the device
+├── static/
+│   └── js/frame-viewer.js   All viewer logic (shared by desktop and mobile)
+├── desktop/index.html       Desktop version (Editorial+)
+├── mobile/index.html        Mobile version (Stack)
+├── static/                  Background image and favicon
+└── server.py                Local test server
 ```
 
-## Teclado (desktop)
+## Keyboard (desktop)
 
-`←`/`→` frame · `↑`/`↓` episódio · `R` random. No celular, arraste a imagem pro lado.
+`←`/`→` frame · `↑`/`↓` episode · `R` random. On mobile, swipe the image sideways.
 
-## Observações honestas
+## Honest notes
 
-- O timestamp é uma **estimativa** (fps fixo por temporada), não o timecode exato do episódio.
-- Depende de GitHub raw (+ proxy só no fallback); se o GitHub cair, o app fica lento até cair de vez.
+- The timestamp is an **estimate** (fixed fps per season), not the exact episode timecode.
+- Depends on GitHub raw (proxy only as fallback); if GitHub is down, the app gets slow until it fails.
