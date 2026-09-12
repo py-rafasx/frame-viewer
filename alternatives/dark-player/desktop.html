@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Player — Desktop</title>
+    <link rel="icon" href="../../static/chibi-frieren.jpeg">
+    <style>
+        :root {
+            --bg: #0a0d14;
+            --panel: rgba(255,255,255,0.06);
+            --panel-solid: rgba(16,18,26,0.92);
+            --border: rgba(255,255,255,0.08);
+            --text: #e6e9f0;
+            --muted: #7a829a;
+            --accent: #7c5cfc;
+            --accent2: #a855f7;
+            --radius: 14px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg) url('../../static/fundo.jpg') center/cover no-repeat;
+            background-blend-mode: multiply;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text);
+            padding: 18px;
+            padding-top: 12px;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: linear-gradient(180deg, rgba(10,13,20,0.75) 0%, rgba(10,13,20,0.92) 100%);
+            z-index: 0;
+        }
+        body > * { position: relative; z-index: 1; }
+
+        .back-link {
+            position: fixed; top: 14px; left: 18px; z-index: 50;
+            color: var(--muted); text-decoration: none; font-size: 13px;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 20px; padding: 5px 14px;
+            transition: color .2s, background .2s;
+        }
+        .back-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+        .app { width: 100%; max-width: 1140px; display: flex; flex-direction: column; gap: 10px; }
+
+        /* ---- topbar ---- */
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 16px; border-radius: var(--radius);
+            background: var(--panel); border: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+        }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+        .brand img { width: 30px; height: 30px; border-radius: 8px; }
+        .brand em { font-weight: 400; color: var(--muted); font-style: normal; margin-left: 2px; }
+        .selects { display: flex; gap: 10px; }
+        .selects select {
+            background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border);
+            border-radius: 10px; padding: 8px 12px; font-size: 14px; min-width: 110px;
+            cursor: pointer; transition: border-color .2s;
+        }
+        .selects select:hover, .selects select:focus {
+            outline: none; border-color: var(--accent);
+        }
+
+        /* ---- stage ---- */
+        .stage {
+            width: 100%; aspect-ratio: 16/9; border-radius: var(--radius);
+            background: #000; border: 1px solid var(--border);
+            overflow: hidden; position: relative;
+            box-shadow: 0 0 60px rgba(124,92,252,0.08);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .stage img { width: 100%; height: 100%; object-fit: contain; }
+
+        #err-msg-view {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 80%; max-width: 380px; display: none; flex-direction: column;
+            align-items: center; text-align: center;
+            background: rgba(20,14,30,0.94); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 20px; gap: 6px; z-index: 3;
+            color: #f87171; font-weight: 600;
+        }
+        .spinner {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 44px; height: 44px; border: 4px solid rgba(255,255,255,0.12);
+            border-top-color: var(--accent); border-radius: 50%;
+            animation: spin .9s linear infinite; z-index: 2; display: none;
+        }
+        @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+        /* ---- player bar ---- */
+        .player {
+            background: var(--panel-solid); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 14px 18px; display: flex;
+            flex-direction: column; gap: 12px; backdrop-filter: blur(16px);
+        }
+        .time-row { display: flex; align-items: center; gap: 12px; }
+        .time-row span { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--muted); min-width: 90px; }
+        .time-row span:first-child { text-align: right; }
+        #progress-bar {
+            flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1);
+            -webkit-appearance: none; appearance: none; outline: none; cursor: pointer;
+        }
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            box-shadow: 0 2px 8px rgba(124,92,252,0.45); margin-top: -5px;
+            transition: transform .15s;
+        }
+        #progress-bar::-webkit-slider-thumb:hover { transform: scale(1.25); }
+        #progress-bar::-moz-range-thumb {
+            width: 16px; height: 16px; border: none; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            box-shadow: 0 2px 8px rgba(124,92,252,0.45);
+        }
+        #progress-bar::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); }
+        #progress-bar::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); border: none; }
+
+        .btn-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .ctrl {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            height: 40px; border-radius: 10px; border: none; font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: background .2s, transform .15s;
+            padding: 0 14px; color: var(--text);
+            background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+        }
+        .ctrl svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .ctrl:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+        .ctrl.primary { background: var(--accent); border-color: transparent; color: #fff; }
+        .ctrl.primary:hover { background: #6a4be0; }
+        .ctrl.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+        .ctrl.ghost:hover { color: #fff; background: rgba(255,255,255,0.07); }
+
+        .jump {
+            display: flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+            border-radius: 10px; padding: 0 10px; height: 40px;
+        }
+        .jump label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+        #frame-input {
+            width: 62px; background: transparent; border: none; color: var(--text);
+            font-size: 14px; font-weight: 600; outline: none; text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+        #frame-input::-webkit-inner-spin-button, #frame-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+        #frame-input::-moz-appearance { -moz-appearance: textfield; }
+
+        #timestamp-input {
+            width: 110px; height: 40px; border-radius: 10px;
+            background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+            color: var(--text); font-size: 13px; font-weight: 600; text-align: center;
+            font-variant-numeric: tabular-nums; outline: none;
+            padding: 0; cursor: default;
+        }
+
+        .hint {
+            text-align: center; font-size: 12px; color: var(--muted);
+            opacity: .7; padding-top: 2px;
+        }
+
+        @media (max-width: 860px) {
+            .btn-row { gap: 8px; }
+            .ctrl { padding: 0 10px; height: 38px; font-size: 12px; }
+            .ctrl .label { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <a class="back-link" href="../index.html">← Alternativas</a>
+
+    <div class="app">
+        <header class="topbar">
+            <div class="brand">
+                <img src="../../static/chibi-frieren.jpeg" alt="Frieren">
+                <span>Frieren <em>Frame Viewer</em></span>
+            </div>
+            <div class="selects">
+                <select id="season-list"><option value="" disabled selected>Season</option></select>
+                <select id="episode-list"><option value="" disabled selected>Episode</option></select>
+            </div>
+        </header>
+
+        <main class="stage">
+            <img id="current-image" src="" alt="Frame">
+            <div id="err-msg-view"></div>
+            <div class="spinner"></div>
+        </main>
+
+        <section class="player">
+            <div class="time-row">
+                <span id="current-time">0:00:00.00</span>
+                <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.01">
+                <span id="total-time">0:00:00.00</span>
+            </div>
+            <div class="btn-row">
+                <button class="ctrl ghost" id="prev-btn" aria-label="Previous frame">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span class="label">Prev</span>
+                </button>
+                <button class="ctrl ghost" id="random-btn" aria-label="Random frame">
+                    <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                    <span class="label">Random</span>
+                </button>
+                <div class="jump">
+                    <label>Frame</label>
+                    <input type="number" id="frame-input" placeholder="1234" data-min="1">
+                </div>
+                <input type="text" id="timestamp-input" value="0:00:00.00" readonly>
+                <button class="ctrl ghost" id="download-btn" aria-label="Download frame">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span class="label">Download</span>
+                </button>
+                <button class="ctrl primary" id="next-btn" aria-label="Next frame">
+                    <span class="label">Next</span>
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </section>
+
+        <p class="hint">← → navegar &nbsp;·&nbsp; ↑ ↓ episódio &nbsp;·&nbsp; R/D aleatório</p>
+    </div>
+
+    <script src="../../desktop/main.js"></script>
+</body>
+</html>

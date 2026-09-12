@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frieren Frame Viewer — Desktop</title>
-    <link rel="icon" href="../static/chibi-frieren.jpeg">
+    <title>Editorial+ — Desktop (Fullscreen)</title>
+    <link rel="icon" href="../../static/chibi-frieren.jpeg">
     <style>
         :root {
             --paper: #faf9f6;
@@ -29,7 +29,7 @@
         }
         body::before {
             content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-            background: url('../static/fundo.jpg') center/cover no-repeat;
+            background: url('../../static/fundo.jpg') center/cover no-repeat;
             opacity: .05; filter: blur(10px);
         }
 
@@ -286,7 +286,7 @@
         </div>
     </main>
 
-    <script src="main.js"></script>
+    <script src="../../desktop/main.js"></script>
     <script>
         const frameLabel = document.getElementById('frame-label');
         const frameTotal = document.getElementById('frame-total-label');

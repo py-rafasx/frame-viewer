@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Dark Player — Mobile</title>
+    <link rel="icon" href="../../static/chibi-frieren.jpeg">
+    <style>
+        :root {
+            --bg: #0a0d14;
+            --panel: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.10);
+            --text: #e6e9f0;
+            --muted: #7a829a;
+            --accent: #7c5cfc;
+            --accent2: #a855f7;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            height: 100dvh; overflow: hidden; position: fixed; inset: 0;
+            display: flex; flex-direction: column; color: var(--text);
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior: none;
+            user-select: none;
+        }
+        /* background art with dark cinematic overlay */
+        .bg {
+            position: fixed; inset: 0; z-index: 0;
+            background: var(--bg) url('../../static/fundo.jpg') center/cover no-repeat;
+        }
+        .bg::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(10,13,20,0.82), rgba(10,13,20,0.86) 55%, rgba(10,13,20,0.95));
+        }
+        .app { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; min-height: 0; padding: calc(10px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom)); gap: 8px; }
+
+        /* ---- header ---- */
+        .head { display: flex; align-items: center; gap: 8px; }
+        .head .logo { width: 26px; height: 26px; border-radius: 7px; }
+        .head h1 { font-size: 13px; font-weight: 700; letter-spacing: .3px; flex: 1; }
+        .head select {
+            background: var(--panel); color: var(--text); border: 1px solid var(--border);
+            border-radius: 10px; padding: 7px 10px; font-size: 13px; min-width: 0;
+            max-width: 44%; cursor: pointer;
+        }
+        select:focus { outline: none; border-color: var(--accent); }
+
+        /* ---- frame / timestamp ---- */
+        .meta {
+            display: flex; gap: 8px; align-items: stretch;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 12px; padding: 8px;
+        }
+        .meta .cell { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .meta label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
+        #frame-input {
+            width: 100%; background: transparent; border: none; outline: none;
+            color: var(--text); font-size: clamp(20px, 6vw, 26px); font-weight: 700;
+            text-align: center; font-variant-numeric: tabular-nums;
+        }
+        #frame-input::-webkit-inner-spin-button, #frame-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+        #timestamp-btn {
+            width: 100%; text-align: center; background: transparent; border: none;
+            color: var(--accent2); font-size: clamp(15px, 4.5vw, 18px); font-weight: 600;
+            font-variant-numeric: tabular-nums; cursor: default;
+        }
+
+        /* ---- stage ---- */
+        .stage {
+            flex: 1; min-height: 0; position: relative; border-radius: 14px;
+            background: #000; border: 1px solid var(--border); overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .stage img { width: 100%; height: 100%; object-fit: contain; }
+        #err-msg-view {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 82%; max-width: 320px; display: none;
+            background: rgba(20,14,30,0.95); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px; padding: 16px; text-align: center;
+            color: #f87171; font-weight: 600; font-size: 13px; z-index: 3;
+        }
+        .spinner {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.12);
+            border-top-color: var(--accent); border-radius: 50%;
+            animation: spin .9s linear infinite; z-index: 2; display: none;
+        }
+        @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+        /* ---- bottom controls ---- */
+        .bottom { display: flex; flex-direction: column; gap: 8px; }
+        .time-row { display: flex; align-items: center; gap: 10px; }
+        .time-row span { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 78px; }
+        .time-row span:first-child { text-align: right; }
+        #progress-bar {
+            flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.1);
+            -webkit-appearance: none; appearance: none; outline: none; cursor: pointer;
+            touch-action: manipulation;
+        }
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            box-shadow: 0 2px 8px rgba(124,92,252,0.5); margin-top: -6.5px;
+        }
+        #progress-bar::-moz-range-thumb {
+            width: 18px; height: 18px; border: none; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+        }
+        #progress-bar::-webkit-slider-runnable-track { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.1); }
+        #progress-bar::-moz-range-track { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.1); border: none; }
+
+        .nav {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 14px; padding: 8px;
+        }
+        .nav button {
+            -webkit-appearance: none; appearance: none; border: none; cursor: pointer;
+            aspect-ratio: 1; border-radius: 12px;
+            background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform .15s, background .2s; min-height: 44px; min-width: 44px;
+        }
+        .nav button:active { transform: scale(0.92); }
+        .nav button svg { width: 22px; height: 22px; stroke: var(--text); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .nav button.accent { background: linear-gradient(135deg, var(--accent), var(--accent2)); border-color: transparent; }
+        .nav button.accent svg { stroke: #fff; }
+        #dummy-hint { display: none; }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+
+    <div class="app">
+        <header class="head">
+            <img class="logo" src="../../static/chibi-frieren.jpeg" alt="Frieren">
+            <h1>Frieren · Frames</h1>
+            <select id="season-list"><option value="" disabled selected>Season</option></select>
+            <select id="episode-list"><option value="" disabled selected>Episode</option></select>
+        </header>
+
+        <div class="meta">
+            <div class="cell">
+                <label for="frame-input">Frame</label>
+                <input type="number" id="frame-input" placeholder="1234" data-min="1">
+            </div>
+            <div class="cell">
+                <label>Timestamp</label>
+                <div id="timestamp-btn">0:00:00.00</div>
+            </div>
+        </div>
+
+        <main class="stage">
+            <img id="current-image" src="" alt="Frame">
+            <div id="err-msg-view"></div>
+            <div class="spinner"></div>
+        </main>
+
+        <div class="bottom">
+            <div class="time-row">
+                <span id="current-time">0:00:00.00</span>
+                <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.01">
+                <span id="total-time">0:00:00.00</span>
+            </div>
+            <nav class="nav">
+                <button id="prev-btn" aria-label="Previous frame">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button id="random-btn" aria-label="Random frame">
+                    <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                </button>
+                <button class="accent" id="download-btn" aria-label="Download frame">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </button>
+                <button id="next-btn" aria-label="Next frame">
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <script src="../../mobile/main.js"></script>
+</body>
+</html>

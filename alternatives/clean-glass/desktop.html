@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Glass — Desktop</title>
+    <link rel="icon" href="../../static/chibi-frieren.jpeg">
+    <style>
+        :root {
+            --bg1: #dfe9f3;
+            --bg2: #eceaf7;
+            --glass: rgba(255,255,255,0.55);
+            --glass-strong: rgba(255,255,255,0.75);
+            --stroke: rgba(255,255,255,0.75);
+            --text: #1e293b;
+            --muted: #64748b;
+            --accent: #2563eb;
+            --accent2: #7c3aed;
+            --radius: 18px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(1200px 600px at 85% -10%, rgba(124,58,237,0.18), transparent 60%),
+                radial-gradient(900px 500px at -10% 110%, rgba(37,99,235,0.16), transparent 55%),
+                linear-gradient(160deg, var(--bg1), var(--bg2));
+            color: var(--text);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: url('../../static/fundo.jpg') center/cover no-repeat;
+            opacity: .07; filter: blur(14px);
+        }
+        body > * { position: relative; z-index: 1; }
+
+        .back-link {
+            position: fixed; top: 14px; left: 16px; z-index: 40;
+            font-size: 13px; color: var(--muted); text-decoration: none;
+            background: var(--glass); border: 1px solid var(--stroke);
+            border-radius: 20px; padding: 5px 14px; backdrop-filter: blur(12px);
+            transition: color .2s, transform .2s;
+        }
+        .back-link:hover { color: var(--accent); transform: translateX(-2px); }
+
+        .layout {
+            display: grid; grid-template-columns: 264px 1fr; gap: 16px;
+            width: 100%; max-width: 1240px;
+        }
+
+        /* ---------- glass panel base ---------- */
+        .panel {
+            background: var(--glass);
+            backdrop-filter: blur(22px) saturate(1.4);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            box-shadow: 0 18px 50px rgba(30,41,59,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        /* ---------- sidebar ---------- */
+        .sidebar { padding: 18px; display: flex; flex-direction: column; gap: 16px; align-self: start; position: sticky; top: 20px; }
+        .brand { display: flex; align-items: center; gap: 10px; padding-bottom: 4px; }
+        .brand img { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 4px 10px rgba(37,99,235,0.25); }
+        .brand h1 { font-size: 16px; font-weight: 800; letter-spacing: -.2px; line-height: 1.15; }
+        .brand h1 span { display: block; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .4px; }
+
+        .field { display: flex; flex-direction: column; gap: 6px; }
+        .field > label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
+        .field select, .field input {
+            width: 100%; height: 42px; border-radius: 12px; padding: 0 12px;
+            border: 1.5px solid rgba(30,41,59,0.08); background: var(--glass-strong);
+            color: var(--text); font-size: 14px; font-weight: 500; outline: none;
+            font-family: inherit; transition: border-color .2s, box-shadow .2s;
+        }
+        .field select { cursor: pointer; }
+        .field select:focus, .field input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+        #frame-input { text-align: center; font-variant-numeric: tabular-nums; }
+        #frame-input::-webkit-inner-spin-button, #frame-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+        #timestamp-input { text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; cursor: default; }
+
+        .shortcuts { font-size: 12px; color: var(--muted); line-height: 1.9; }
+        .shortcuts strong { color: var(--text); font-weight: 600; }
+        .shortcuts b {
+            font-family: ui-monospace, 'Cascadia Code', monospace; font-weight: 600; font-size: 11px;
+            background: rgba(30,41,59,0.06); border: 1px solid rgba(30,41,59,0.10);
+            border-radius: 5px; padding: 1px 5px; color: var(--accent);
+        }
+
+        /* ---------- main ---------- */
+        .main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+        .stage {
+            border-radius: var(--radius); overflow: hidden; position: relative;
+            aspect-ratio: 16/9; background: #101522;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 24px 60px rgba(30,41,59,0.22);
+        }
+        .stage img { width: 100%; height: 100%; object-fit: contain; }
+        #err-msg-view {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 78%; max-width: 360px; display: none;
+            background: rgba(255,255,255,0.96); border-radius: 12px; padding: 18px;
+            text-align: center; color: #dc2626; font-weight: 600; z-index: 3;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        }
+        .spinner {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 46px; height: 46px; border: 4px solid rgba(255,255,255,0.18);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin .9s linear infinite; z-index: 2; display: none;
+        }
+        @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+        .progress-panel { padding: 14px 18px 6px; display: flex; flex-direction: column; gap: 4px; }
+        .time-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+        #progress-bar {
+            width: 100%; height: 8px; border-radius: 4px; background: rgba(30,41,59,0.10);
+            -webkit-appearance: none; appearance: none; outline: none; cursor: pointer;
+        }
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: 2.5px solid #fff; margin-top: -5px;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.4);
+            transition: transform .15s;
+        }
+        #progress-bar::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        #progress-bar::-moz-range-thumb {
+            width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid #fff;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            box-shadow: 0 2px 8px rgba(37,99,235,0.4);
+        }
+        #progress-bar::-webkit-slider-runnable-track { height: 8px; border-radius: 4px; background: rgba(30,41,59,0.10); }
+        #progress-bar::-moz-range-track { height: 8px; border-radius: 4px; background: rgba(30,41,59,0.10); border: none; }
+
+        .actions {
+            padding: 14px 18px; display: flex; align-items: center; justify-content: center;
+            gap: 10px; flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px; height: 42px;
+            border-radius: 12px; padding: 0 16px; border: none; cursor: pointer;
+            font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text);
+            background: rgba(255,255,255,0.7); border: 1.5px solid rgba(30,41,59,0.08);
+            transition: transform .15s, box-shadow .2s, background .2s; min-width: 100px;
+        }
+        .btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(30,41,59,0.12); background: #fff; }
+        .btn:active { transform: translateY(0); }
+        .btn.primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff;
+            border-color: transparent; box-shadow: 0 8px 20px rgba(37,99,235,0.30);
+        }
+        .btn.primary:hover { background: linear-gradient(135deg, #1d4ed8, #6d28d9); }
+
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; flex-direction: row; flex-wrap: wrap; align-items: center; }
+            .sidebar .field { flex: 1; min-width: 140px; }
+            .shortcuts { flex-basis: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <a class="back-link" href="../index.html">← Alternativas</a>
+
+    <div class="layout">
+        <aside class="sidebar panel">
+            <div class="brand">
+                <img src="../../static/chibi-frieren.jpeg" alt="Frieren">
+                <h1>Frieren<span>Frame Viewer</span></h1>
+            </div>
+            <div class="field">
+                <label for="season-list">Temporada</label>
+                <select id="season-list"><option value="" disabled selected>Season</option></select>
+            </div>
+            <div class="field">
+                <label for="episode-list">Episódio</label>
+                <select id="episode-list"><option value="" disabled selected>Episode</option></select>
+            </div>
+            <div class="field">
+                <label for="frame-input">Frame</label>
+                <input type="number" id="frame-input" placeholder="1234" data-min="1">
+            </div>
+            <div class="field">
+                <label for="timestamp-input">Timestamp</label>
+                <input type="text" id="timestamp-input" value="0:00:00.00" readonly>
+            </div>
+            <div class="shortcuts">
+                <strong>Atalhos</strong><br>
+                <b>←</b>/<b>→</b> frame &nbsp;·&nbsp; <b>↑</b>/<b>↓</b> episódio
+            </div>
+        </aside>
+
+        <main class="main">
+            <section class="stage">
+                <img id="current-image" src="" alt="Frame">
+                <div id="err-msg-view"></div>
+                <div class="spinner"></div>
+            </section>
+
+            <section class="progress-panel panel">
+                <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.01">
+                <div class="time-row">
+                    <span id="current-time">0:00:00.00</span>
+                    <span id="total-time">0:00:00.00</span>
+                </div>
+            </section>
+
+            <section class="actions panel">
+                <button class="btn" id="prev-btn">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    Prev
+                </button>
+                <button class="btn" id="random-btn">
+                    <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                    Random
+                </button>
+                <button class="btn" id="download-btn">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download
+                </button>
+                <button class="btn primary" id="next-btn">
+                    Next
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <script src="../../desktop/main.js"></script>
+</body>
+</html>

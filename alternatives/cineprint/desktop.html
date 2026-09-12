@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cineprint — Desktop</title>
+    <link rel="icon" href="../../static/chibi-frieren.jpeg">
+    <style>
+        :root {
+            --bg: #12100c;
+            --panel: #1a1712;
+            --panel-2: #221e17;
+            --ink: #e8e0ce;
+            --muted: #94896f;
+            --line: #2b251c;
+            --line-strong: #3b3325;
+            --amber: #d8bd7f;
+            --red: #b3402e;
+            --mono: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--sans); color: var(--ink);
+            min-height: 100vh;
+            background:
+                radial-gradient(1000px 500px at 80% -10%, rgba(216,189,127,0.05), transparent 60%),
+                var(--bg);
+            display: flex; flex-direction: column; align-items: center;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: url('../../static/fundo.jpg') center/cover no-repeat;
+            opacity: .09; filter: blur(14px) brightness(.55) sepia(.3);
+        }
+
+        .back-link {
+            position: fixed; top: 14px; left: 16px; z-index: 60;
+            font-size: 12px; color: var(--muted); text-decoration: none;
+            font-family: var(--mono); letter-spacing: .5px;
+            background: rgba(26,23,18,0.85); border: 1px solid var(--line);
+            border-radius: 30px; padding: 6px 14px; backdrop-filter: blur(8px);
+            transition: color .2s;
+        }
+        .back-link:hover { color: var(--amber); }
+
+        /* ---- topbar ---- */
+        .topbar {
+            position: sticky; top: 0; z-index: 50; width: 100%;
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            padding: 12px max(18px, calc((100vw - 1120px) / 2));
+            background: rgba(18,16,12,0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+        .edge-brand { font-family: var(--mono); font-size: 13px; letter-spacing: 3px; font-weight: 700; }
+        .edge-brand .dot { color: var(--red); }
+        .edge-brand .type { color: var(--muted); font-weight: 400; letter-spacing: 1px; }
+        .top-actions { display: flex; gap: 8px; }
+        .top-actions select {
+            appearance: none; -webkit-appearance: none;
+            font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 1px; color: var(--ink);
+            background: var(--panel) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2394896f' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+            border: 1px solid var(--line-strong); border-radius: 2px;
+            padding: 9px 32px 9px 14px; cursor: pointer; min-width: 130px;
+            transition: border-color .2s;
+        }
+        .top-actions select:hover { border-color: var(--amber); }
+        .top-actions select:focus-visible { outline: none; border-color: var(--amber); }
+
+        .shell { width: 100%; max-width: 1120px; padding: 26px 18px 40px; display: flex; flex-direction: column; gap: 14px; }
+
+        /* ---- film body ---- */
+        .film {
+            background: var(--panel); border: 1px solid var(--line);
+            padding: 0 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+        }
+        .sprockets {
+            height: 22px;
+            background-color: var(--panel-2);
+            background-image: radial-gradient(circle, #0c0a07 3px, transparent 3.6px);
+            background-size: 30px 22px;
+            background-position: 0 100%;
+            background-repeat: repeat-x;
+            position: relative;
+        }
+        .sprockets.top { border-bottom: 1px solid var(--line-strong); background-position: 0 60%; }
+        .sprockets.bottom { border-top: 1px solid var(--line-strong); }
+        .edge-text {
+            position: absolute; right: 8px; top: 2px;
+            font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--muted);
+            background: var(--panel-2); padding: 0 6px;
+        }
+        .sprockets.top .edge-text { top: 3px; }
+        .sprockets.bottom .edge-text { bottom: 1px; top: auto; }
+
+        .stage {
+            position: relative; aspect-ratio: 16/9; background: #080705;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .stage img { width: 100%; height: 100%; object-fit: contain; }
+        /* subtle gate marks like a film projector */
+        .stage::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.45);
+        }
+        #err-msg-view {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 76%; max-width: 360px; display: none;
+            background: #201a12; border: 1px solid #4c3f28; border-radius: 2px;
+            padding: 18px; text-align: center; color: #e4b860; font-weight: 600; z-index: 3;
+            font-family: var(--mono); font-size: 13px; letter-spacing: .5px;
+        }
+        .spinner {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 42px; height: 42px; border: 3px solid rgba(255,255,255,0.12);
+            border-top-color: var(--amber); border-radius: 50%;
+            animation: spin .9s linear infinite; z-index: 2; display: none;
+        }
+        @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+        /* ---- meta / timecode ---- */
+        .meta-row {
+            display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+            padding: 12px 6px 0; font-family: var(--mono);
+        }
+        .tc { font-size: clamp(20px, 3vw, 30px); letter-spacing: 2px; color: var(--amber); font-variant-numeric: tabular-nums; font-weight: 700; }
+        .tc .rec { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--red); margin-right: 10px; vertical-align: middle; animation: blink 1.4s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: .25; } }
+        .frame-no { font-size: 13px; letter-spacing: 2px; color: var(--muted); }
+        .frame-no b { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+        /* ---- deck ---- */
+        .deck {
+            background: var(--panel); border: 1px solid var(--line);
+            padding: 16px 20px 14px; display: flex; flex-direction: column; gap: 14px;
+        }
+        .progress-row { display: flex; align-items: center; gap: 14px; }
+        .progress-row time { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; font-family: var(--mono); min-width: 84px; }
+        .progress-row time:first-child { text-align: right; }
+        #progress-bar {
+            flex: 1; height: 4px; border-radius: 2px; background: var(--line-strong);
+            -webkit-appearance: none; appearance: none; outline: none; cursor: pointer;
+        }
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 14px; height: 22px; border-radius: 2px;
+            background: var(--amber); margin-top: -9px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform .15s;
+        }
+        #progress-bar::-webkit-slider-thumb:hover { transform: scaleY(1.2); }
+        #progress-bar::-moz-range-thumb {
+            width: 12px; height: 22px; border: none; border-radius: 2px; background: var(--amber);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        #progress-bar::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: var(--line-strong); }
+        #progress-bar::-moz-range-track { height: 4px; border-radius: 2px; background: var(--line-strong); border: none; }
+
+        .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+        .toolbar .group { display: flex; align-items: center; gap: 8px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px; height: 40px;
+            padding: 0 16px; border-radius: 2px; border: 1px solid var(--line-strong);
+            background: transparent; color: var(--ink); cursor: pointer;
+            font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+            transition: transform .15s, border-color .2s, color .2s;
+        }
+        .btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .btn:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-1px); }
+        .btn.solid { background: var(--amber); border-color: var(--amber); color: #1a1408; }
+        .btn.solid:hover { background: #e6cf96; color: #1a1408; }
+        .btn.icon { padding: 0; width: 40px; justify-content: center; }
+        .jump { display: flex; align-items: center; gap: 8px; }
+        .jump label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; }
+        #frame-input {
+            width: 76px; height: 40px; text-align: center; border: 1px solid var(--line-strong);
+            background: var(--panel-2); color: var(--amber); font-size: 14px; font-weight: 700; outline: none;
+            border-radius: 2px; font-family: var(--mono); font-variant-numeric: tabular-nums;
+        }
+        #frame-input:focus { border-color: var(--amber); }
+        #frame-input::-webkit-inner-spin-button, #frame-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+        #timestamp-input {
+            width: 128px; height: 40px; border: none; background: transparent; outline: none;
+            text-align: center; color: var(--muted); font-size: 12.5px; font-weight: 600; cursor: default;
+            font-family: var(--mono); letter-spacing: 1.5px; font-variant-numeric: tabular-nums;
+        }
+        .hint { text-align: center; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+        @media (max-width: 760px) {
+            .toolbar { justify-content: center; }
+            .meta-row { flex-direction: column; align-items: center; text-align: center; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <a class="back-link" href="../index.html">← Alt</a>
+
+    <header class="topbar">
+        <div class="edge-brand"><span class="dot">●</span> FRAME·VIEW <span class="type">— PROJ 35MM</span></div>
+        <div class="top-actions">
+            <select id="season-list"><option value="" disabled selected>Season</option></select>
+            <select id="episode-list"><option value="" disabled selected>Episode</option></select>
+        </div>
+    </header>
+
+    <main class="shell">
+        <figure class="film">
+            <div class="sprockets top"><span class="edge-text">FRAME <span id="edge-label">000001</span> · S<span id="edge-s">-</span> EP<span id="edge-e">-</span></span></div>
+            <div class="stage">
+                <img id="current-image" src="" alt="Frame">
+                <div id="err-msg-view"></div>
+                <div class="spinner"></div>
+            </div>
+            <div class="sprockets bottom"><span class="edge-text">FRIEREN — "SOUSOU NO FRIEREN"</span></div>
+        </figure>
+
+        <div class="meta-row">
+            <span class="tc"><span class="rec"></span><span id="time-label">0:00:00.00</span></span>
+            <span class="frame-no">FRAME <b id="frame-label">—</b> / <span id="frame-total-label">—</span></span>
+        </div>
+
+        <section class="deck">
+            <div class="progress-row">
+                <time id="current-time">0:00:00.00</time>
+                <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.01">
+                <time id="total-time">0:00:00.00</time>
+            </div>
+            <div class="toolbar">
+                <div class="group">
+                    <button class="btn icon" id="prev-btn" aria-label="Previous frame">
+                        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="btn" id="random-btn">
+                        <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                        RND
+                    </button>
+                </div>
+                <div class="group">
+                    <div class="jump">
+                        <label for="frame-input">FRAME</label>
+                        <input type="number" id="frame-input" placeholder="1234" data-min="1">
+                    </div>
+                    <input type="text" id="timestamp-input" value="0:00:00.00" readonly>
+                </div>
+                <div class="group">
+                    <button class="btn" id="download-btn">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        SAVE
+                    </button>
+                    <button class="btn solid" id="next-btn">NEXT ▸</button>
+                </div>
+            </div>
+        </section>
+
+        <p class="hint">← / → FRAME &nbsp;·&nbsp; ↑ / ↓ EPISODE &nbsp;·&nbsp; R RANDOM</p>
+    </main>
+
+    <script src="../../desktop/main.js"></script>
+    <script>
+        const timeLabel = document.getElementById('time-label');
+        const frameLabel = document.getElementById('frame-label');
+        const frameTotal = document.getElementById('frame-total-label');
+        const edgeLabel = document.getElementById('edge-label');
+        const edgeS = document.getElementById('edge-s');
+        const edgeE = document.getElementById('edge-e');
+        const origSetTimestamp = set_timestamp;
+        set_timestamp = function () {
+            origSetTimestamp();
+            const tsInput = document.getElementById('timestamp-input');
+            if (tsInput) timeLabel.textContent = tsInput.value;
+            if (global_frame != null && seasons[global_season] && seasons[global_season].episodes[global_episode]) {
+                const f = String(global_frame).padStart(6, '0');
+                frameLabel.textContent = global_frame;
+                frameTotal.textContent = seasons[global_season].episodes[global_episode].frames;
+                edgeLabel.textContent = f;
+                edgeS.textContent = global_season;
+                edgeE.textContent = global_episode;
+            }
+        };
+    </script>
+</body>
+</html>

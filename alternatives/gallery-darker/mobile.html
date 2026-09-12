@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Galeria Noturna — Mobile</title>
+    <link rel="icon" href="../../static/chibi-frieren.jpeg">
+    <style>
+        :root {
+            --wall: #131214;
+            --panel: #1b191d;
+            --panel-2: #201e23;
+            --ink: #e9e4da;
+            --muted: #8a8378;
+            --line: #2a272d;
+            --line-strong: #3a363d;
+            --brass: #c9a45c;
+            --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            font-family: var(--sans); color: var(--ink);
+            height: 100dvh; overflow: hidden; position: fixed; inset: 0;
+            background:
+                radial-gradient(600px 400px at 90% -10%, rgba(201,164,92,0.07), transparent 60%),
+                var(--wall);
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior: none; user-select: none;
+        }
+        .app {
+            height: 100%; display: flex; flex-direction: column; gap: 8px;
+            padding: calc(8px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom));
+        }
+
+        .top {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            padding: 10px 4px; border-bottom: 1px solid var(--line);
+        }
+        .wordmark { font-family: var(--serif); font-size: 19px; font-weight: 600; letter-spacing: .2px; white-space: nowrap; }
+        .wordmark i { font-style: normal; color: var(--brass); }
+        .top select {
+            appearance: none; -webkit-appearance: none; font-family: inherit;
+            font-size: 12.5px; font-weight: 600; color: var(--ink);
+            background: var(--panel) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8378' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+            border: 1px solid var(--line-strong); border-radius: 4px;
+            padding: 8px 26px 8px 12px; cursor: pointer; max-width: 42%;
+        }
+        select:focus { outline: none; border-color: var(--brass); }
+
+        .plaque { text-align: center; font-family: var(--serif); font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+        .plaque b { color: var(--brass); font-weight: 600; }
+
+        .caption { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; padding: 0 4px; }
+        .cap-left { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .kicker { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.4px; color: var(--muted); }
+        .cap-left .big { font-family: var(--serif); font-size: clamp(24px, 7vw, 32px); font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+        .cap-left .big small { font-size: .5em; font-weight: 400; color: var(--muted); margin-left: 4px; }
+        .cap-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+        .cap-right .ep { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--brass); white-space: nowrap; }
+        .cap-right .ts {
+            font-size: 11.5px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums;
+            border: 1px solid var(--line-strong); border-radius: 4px; padding: 5px 11px; background: var(--panel);
+        }
+
+        .stage {
+            flex: 1; min-height: 0; position: relative; overflow: hidden;
+            background: #07070a; display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--line);
+        }
+        .stage img { width: 100%; height: 100%; object-fit: contain; }
+        #err-msg-view {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 82%; max-width: 320px; display: none;
+            background: #221d16; border: 1px solid #4a3f2a; border-radius: 4px;
+            padding: 15px; text-align: center; color: #e0b36a; font-weight: 600; font-size: 13px; z-index: 3;
+            box-shadow: 0 14px 36px rgba(0,0,0,0.6);
+        }
+        .spinner {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 38px; height: 38px; border: 3px solid rgba(255,255,255,0.14);
+            border-top-color: var(--brass); border-radius: 50%;
+            animation: spin .9s linear infinite; z-index: 2; display: none;
+        }
+        @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+        .frame-pill {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
+            padding: 4px 6px 4px 14px;
+        }
+        .frame-pill label { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: var(--muted); }
+        #frame-input {
+            width: 64px; text-align: center; border: 1px solid var(--line-strong); background: var(--panel-2);
+            color: var(--ink); font-family: var(--serif); font-size: 15px; font-weight: 600;
+            border-radius: 4px; padding: 8px 0; outline: none; font-variant-numeric: tabular-nums;
+        }
+        #frame-input:focus { border-color: var(--brass); }
+        #frame-input::-webkit-inner-spin-button, #frame-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+        .progress-card {
+            background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
+            padding: 9px 14px 7px; display: flex; flex-direction: column; gap: 2px;
+        }
+        .time-row { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+        #progress-bar {
+            width: 100%; height: 3px; border-radius: 2px; background: var(--line-strong);
+            -webkit-appearance: none; appearance: none; outline: none; cursor: pointer; touch-action: manipulation;
+        }
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+            background: var(--brass); border: 7px solid var(--panel-2); margin-top: -9.5px;
+            box-shadow: 0 0 0 1px var(--line-strong), 0 2px 6px rgba(0,0,0,0.5);
+        }
+        #progress-bar::-moz-range-thumb {
+            width: 8px; height: 22px; border: none; border-radius: 3px; background: var(--brass);
+            border: 7px solid var(--panel-2); box-shadow: 0 0 0 1px var(--line-strong), 0 2px 6px rgba(0,0,0,0.5);
+        }
+        #progress-bar::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: var(--line-strong); }
+        #progress-bar::-moz-range-track { height: 3px; border-radius: 2px; background: var(--line-strong); border: none; }
+
+        .nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .nav button {
+            -webkit-appearance: none; appearance: none; cursor: pointer;
+            height: 48px; border-radius: 4px; border: 1px solid var(--line-strong);
+            background: var(--panel); color: var(--ink);
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+            font-family: inherit; font-size: 12px; font-weight: 600;
+            transition: border-color .2s, transform .12s; min-width: 44px;
+        }
+        .nav button svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .nav button:hover { border-color: var(--brass); }
+        .nav button:active { transform: scale(0.94); }
+        .nav button.solid { background: var(--brass); border-color: var(--brass); color: #1d1509; font-weight: 700; }
+        .nav .label-sm { font-size: 10px; font-weight: 700; letter-spacing: .5px; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header class="top">
+            <span class="wordmark">Frieren<i>.Frames</i></span>
+            <select id="season-list"><option value="" disabled selected>Season</option></select>
+            <select id="episode-list"><option value="" disabled selected>Episode</option></select>
+        </header>
+
+        <p class="plaque"><b id="plaque-label">—</b> · Arquivo de Quadros</p>
+
+        <div class="caption">
+            <div class="cap-left">
+                <span class="kicker">Quadro</span>
+                <span class="big"><span id="frame-label">—</span><small id="frame-total-label"> / —</small></span>
+            </div>
+            <div class="cap-right">
+                <span class="ep" id="ep-label">—</span>
+                <span class="ts" id="timestamp-btn">0:00:00.00</span>
+            </div>
+        </div>
+
+        <div class="frame-pill">
+            <label for="frame-input">Ir para o frame</label>
+            <input type="number" id="frame-input" placeholder="1234" data-min="1">
+        </div>
+
+        <main class="stage">
+            <img id="current-image" src="" alt="Frame">
+            <div id="err-msg-view"></div>
+            <div class="spinner"></div>
+        </main>
+
+        <div class="progress-card">
+            <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.01">
+            <div class="time-row">
+                <span id="current-time">0:00:00.00</span>
+                <span id="total-time">0:00:00.00</span>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <button id="prev-btn" aria-label="Previous frame">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button id="random-btn" aria-label="Random frame">
+                <span class="label-sm">Rnd</span>
+                <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+            </button>
+            <button id="download-btn" aria-label="Download frame">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+            <button class="solid" id="next-btn" aria-label="Next frame">
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </nav>
+    </div>
+
+    <script src="../../mobile/main.js"></script>
+    <script>
+        const frameLabel = document.getElementById('frame-label');
+        const frameTotal = document.getElementById('frame-total-label');
+        const epLabel = document.getElementById('ep-label');
+        const plaque = document.getElementById('plaque-label');
+        const origSetTimestamp = set_timestamp;
+        set_timestamp = function () {
+            origSetTimestamp();
+            if (global_frame != null && seasons[global_season] && seasons[global_season].episodes[global_episode]) {
+                frameLabel.textContent = global_frame;
+                frameTotal.textContent = ' / ' + seasons[global_season].episodes[global_episode].frames;
+                epLabel.textContent = 'S' + global_season + ' · EP' + global_episode;
+                plaque.textContent = 'S' + global_season + ' · EP' + global_episode;
+            }
+        };
+    </script>
+</body>
+</html>
