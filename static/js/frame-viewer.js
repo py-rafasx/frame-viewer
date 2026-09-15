@@ -8,7 +8,7 @@
 const seasons = {
     "1": {
         name: "Season 1",
-        user_name: "JavaRaf",
+        user_name: "py-rafasx",
         repo: "frames",
         branch: "main",
         img_fps: 3.5,
@@ -24,7 +24,7 @@ const seasons = {
     },
     "2": {
         name: "Season 2",
-        user_name: "JavaRaf",
+        user_name: "py-rafasx",
         repo: "season2",
         branch: "master",
         img_fps: 3.5,
