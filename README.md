@@ -2,7 +2,7 @@
 
 A simple way to browse Frieren frames, episode by episode. Every frame is a moment: the app shows the frame number and an estimated timestamp, and you can jump straight to a frame, shuffle, drag the progress bar or download the image. The URL keeps the moment — share `?season=1&episode=7&frame=1234` and the person opens exactly there.
 
-**Live:** https://javaraf.github.io/frame-viewer/
+**Live:** https://py-rafasx.github.io/frame-viewer/
 
 The root `index.html` decides on its own whether to open the **desktop** version (fullscreen, keyboard) or the **mobile** version (touch-first, with swipe navigation). There is no tutorial because there's no need: the buttons do what they look like.
 
