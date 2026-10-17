@@ -91,8 +91,11 @@ function slugify(text) {
 function extract_image_url(text) {
   const markdown = text.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/);
   if (markdown) return markdown[1];
+  const img = text.match(/<img[^>]+src=["']([^"']+)/);
+  if (img) return img[1];
   const bare = text.match(/https?:\/\/[^\s)]+/);
-  return bare ? bare[0] : null;
+  if (!bare) return null;
+  return bare[0].replace(/[)\],.;:]*$/, '');
 }
 
 function ext_from_type(type) {
