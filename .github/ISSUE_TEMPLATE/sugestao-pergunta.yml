@@ -129,6 +129,14 @@ body:
     validations:
       required: false
 
+  - type: checkboxes
+    id: spoiler
+    attributes:
+      label: Revelação da imagem
+      description: Marque se a imagem mostra ou revela a resposta. Ela ficará borrada até o jogador responder.
+      options:
+        - label: A imagem faz spoiler da resposta (mostrar após o jogador responder)
+
   - type: input
     id: texto_alternativo
     attributes:

@@ -112,10 +112,20 @@
         #progress-fill { height: 100%; width: 0; background: var(--ink); border-radius: 3px; transition: width .3s ease; }
 
         /* ---------- mídia da pergunta (imagem de personagem/objeto/lugar) ---------- */
-        .question-media { margin-bottom: 18px; }
+        .question-media { position: relative; margin-bottom: 18px; }
+        .question-media.revealing { min-height: 180px; }
         .question-image {
             display: block; width: 100%; max-height: 35vh; object-fit: contain;
             background: var(--paper-deep); border: 1px solid var(--line-strong); border-radius: 8px;
+        }
+        .question-image.blurred { filter: blur(16px); transform: scale(1.03); }
+        .image-cover {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            padding: 14px; border-radius: 8px;
+            background: rgba(29, 28, 25, .5);
+            color: #fff; font-size: 12px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.6px;
         }
         .image-unavailable {
             display: flex; align-items: center; justify-content: center; text-align: center;

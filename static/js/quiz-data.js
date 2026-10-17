@@ -6,6 +6,8 @@
 // Perguntas com imagem (adivinhar personagem/objeto/lugar): adicione
 //   image: "img/nome.jpg",           // caminho relativo à página quiz/ ou URL completa
 //   imageAlt: { en, "pt-BR", es }    // descrição acessível
+//   imageReveal: "after"             // opcional: a imagem revela a resposta, então fica
+//                                    // borrada até o jogador responder (padrão: "before")
 // As imagens podem ficar em quiz/img/ (ex.: "img/fern.jpg") ou em qualquer URL.
 
 const QUIZ_QUESTIONS = [
@@ -398,7 +400,7 @@ const QUIZ_QUESTIONS = [
     {
         id: "img-ubel",
         category: "characters",
-        difficulty: "hard",
+        difficulty: "easy",
         image: "img/Übel.jpg",
         imageAlt: {
             en: "Character portrait from Frieren",
@@ -800,7 +802,7 @@ const QUIZ_QUESTIONS = [
         id: "img-serie",
         category: "characters",
         difficulty: "hard",
-        image: "img/Serie.webp",
+        image: "img/Serie.jpg",
         imageAlt: {
             en: "Elven great mage with golden hair",
             "pt-BR": "Grande maga elfa de cabelo dourado",

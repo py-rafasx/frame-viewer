@@ -21,6 +21,7 @@ const LABELS = {
   options: ["Alternativa A", "Alternativa B", "Alternativa C", "Alternativa D"],
   correct: "Resposta correta",
   image: "Imagem",
+  spoiler: "Revelação da imagem",
   imageAlt: "Texto alternativo da imagem"
 };
 
@@ -200,6 +201,10 @@ async function main() {
     question.imageAlt = alt
       ? { en: alt, "pt-BR": alt, es: alt }
       : Object.assign({}, DEFAULT_ALT);
+
+    // Checkbox "Revelação da imagem": marcado => a imagem revela a resposta.
+    const spoiler = clean(fields[LABELS.spoiler]) !== "";
+    if (spoiler) question.imageReveal = "after";
   }
 
   const ordered = {
@@ -210,6 +215,7 @@ async function main() {
   if (question.image) {
     ordered.image = question.image;
     ordered.imageAlt = question.imageAlt;
+    if (question.imageReveal) ordered.imageReveal = question.imageReveal;
   }
   ordered.question = question.question;
   ordered.options = question.options;

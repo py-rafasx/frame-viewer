@@ -200,20 +200,27 @@ function render() {
 
 function render_media(question) {
     el.question_media.innerHTML = "";
+    el.question_media.className = "question-media";
     if (!question.image) {
         el.question_media.hidden = true;
         return;
     }
     el.question_media.hidden = false;
 
+    // imageReveal === "after": a imagem revela a resposta, então fica borrada
+    // sob um véu até o jogador responder (quem pula não vê).
+    const reveal_after = question.imageReveal === "after";
+    const revealed = !reveal_after || state.answered;
+
     const img = document.createElement("img");
-    img.className = "question-image";
-    img.alt = tr(question.imageAlt);
+    img.className = "question-image" + (revealed ? "" : " blurred");
+    img.alt = revealed ? tr(question.imageAlt) : "";
     img.src = question.image;
 
     // se a imagem não existir, mostra um espaço reservado em vez de imagem quebrada
     img.onerror = function () {
         el.question_media.innerHTML = "";
+        el.question_media.className = "question-media";
         const placeholder = document.createElement("div");
         placeholder.className = "image-unavailable";
         placeholder.textContent = t("imageUnavailable");
@@ -221,6 +228,14 @@ function render_media(question) {
     };
 
     el.question_media.appendChild(img);
+
+    if (!revealed) {
+        el.question_media.classList.add("revealing");
+        const cover = document.createElement("div");
+        cover.className = "image-cover";
+        cover.textContent = t("answerToReveal");
+        el.question_media.appendChild(cover);
+    }
 }
 
 function render_question() {
