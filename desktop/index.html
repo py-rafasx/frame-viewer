@@ -53,7 +53,7 @@
         .brand .wordmark i { font-style: normal; color: var(--muted); }
         .brand .sub { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2.6px; font-weight: 600; white-space: nowrap; }
         .topbar .spacer { flex: 1; }
-        .top-actions { display: flex; gap: 8px; }
+        .top-actions { display: flex; gap: 8px; align-items: center; }
         .top-actions select {
             appearance: none; -webkit-appearance: none;
             font-family: inherit; font-size: 13px; font-weight: 600; color: var(--ink);
@@ -169,6 +169,7 @@
             background: #fff; color: var(--ink); cursor: pointer;
             font-size: 13px; font-weight: 600; font-family: inherit;
             transition: transform .15s, box-shadow .2s, border-color .2s; white-space: nowrap;
+            text-decoration: none;
         }
         .btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .btn:hover { border-color: var(--black); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
@@ -218,6 +219,7 @@
             </div>
             <div class="spacer"></div>
             <div class="top-actions">
+                <a class="btn" id="quiz-link" href="../quiz/">Quiz</a>
                 <select id="season-list" aria-label="Season"><option value="" disabled selected>Season</option></select>
                 <select id="episode-list" aria-label="Episode"><option value="" disabled selected>Episode</option></select>
             </div>

@@ -36,17 +36,25 @@
         }
 
         /* ---- topbar ---- */
-        .top { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .wordmark { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: -.2px; flex: 1; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .top { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+        .wordmark { font-family: var(--serif); font-size: 16px; font-weight: 700; letter-spacing: -.2px; white-space: nowrap; }
         .wordmark i { font-style: normal; color: var(--muted); }
+        .top-controls { display: flex; align-items: center; gap: 8px; }
         .top select {
             appearance: none; -webkit-appearance: none; font-family: inherit;
             font-size: 12px; font-weight: 600; color: var(--ink);
             background: var(--paper-deep) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238b857a' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 8px center;
             border: 1px solid var(--line-strong); border-radius: 30px;
-            padding: 7px 22px 7px 10px; cursor: pointer; max-width: 34%; min-width: 0;
+            padding: 7px 22px 7px 10px; cursor: pointer; flex: 1 1 0; min-width: 0;
         }
         select:focus { outline: none; border-color: var(--black); }
+        .top-link {
+            -webkit-appearance: none; appearance: none; text-decoration: none;
+            font-family: inherit; font-size: 12px; font-weight: 600; color: var(--ink);
+            background: var(--paper-deep); border: 1px solid var(--line-strong);
+            border-radius: 30px; padding: 7px 12px; white-space: nowrap; flex-shrink: 0;
+        }
+        .top-link:active { transform: scale(0.96); }
 
         /* ---- imagem 16:9 ---- */
         .image-zone {
@@ -141,8 +149,11 @@
     <div class="app">
         <header class="top">
             <span class="wordmark">Frieren<i>.Frames</i></span>
-            <select id="season-list" aria-label="Season"><option value="" disabled selected>Season</option></select>
-            <select id="episode-list" aria-label="Episode"><option value="" disabled selected>Episode</option></select>
+            <div class="top-controls">
+                <a class="top-link" id="quiz-link" href="../quiz/">Quiz</a>
+                <select id="season-list" aria-label="Season"><option value="" disabled selected>Season</option></select>
+                <select id="episode-list" aria-label="Episode"><option value="" disabled selected>Episode</option></select>
+            </div>
         </header>
 
         <main class="image-zone">
