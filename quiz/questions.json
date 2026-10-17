@@ -9,6 +9,7 @@
             "pt-BR": "Imagem da pergunta",
             "es": "Imagen de la pregunta"
         },
+        "imageReveal": "after",
         "question": {
             "en": "How old is Frieren?",
             "pt-BR": "Qual a idade da Frieren?",
