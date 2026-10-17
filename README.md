@@ -58,14 +58,14 @@ Images try to load straight from GitHub raw; if that fails (rate limit, network)
 ```
 ├── index.html / main.js       Router: opens desktop or mobile depending on the device
 ├── static/
-│   ├── js/                    Shared JS: frame-viewer, i18n, quiz-data, quiz
+│   ├── js/                    Shared JS: frame-viewer, i18n, quiz
 │   ├── fundo.jpg              Background image
 │   └── chibi-frieren.jpeg
 ├── desktop/index.html         Desktop version (Editorial+)
 ├── mobile/index.html          Mobile version (Stack)
 ├── quiz/
 │   ├── index.html             Quiz page
-│   ├── questions.json         Community questions (added via Issue Form + Action)
+│   ├── questions.json         All quiz questions (base + community), single source
 │   └── img/                   Quiz images
 ├── .github/                   Issue Form + Action: approved issue → pull request
 └── server.py                  Local test server
@@ -80,12 +80,12 @@ Images try to load straight from GitHub raw; if that fails (rate limit, network)
 There is a Frieren quiz at `/quiz/` (linked from the header of both versions). It has multiple-choice questions, a limited number of **skips** and **remove one answer** helps, and a final score. It supports three languages — English, Português (BR) and Español — switchable in the header.
 
 - The quiz is **adaptive**: each round has `QUESTIONS_PER_ROUND` questions (10 by default). It starts on **easy** questions and moves up to **medium**/**hard** as you answer correctly (and back down on wrong answers); skips don't change the level. Each question's difficulty is shown in a badge.
-- Questions live in `static/js/quiz-data.js`; add one by following the existing format (each text field holds `en`, `pt-BR` and `es`, `correct` is the 0-based index of the right option, and `difficulty` is `"easy"`, `"medium"` or `"hard"`).
+- All questions live in `quiz/questions.json` (single source, loaded once via `fetch` by `static/js/quiz.js`); add one by following the existing format (every question has an `id`, each text field holds `en`, `pt-BR` and `es`, `correct` is the 0-based index of the right option, `category` is `characters`/`magic`/`places`/`story`/`trivia` and `difficulty` is `"easy"`, `"medium"` or `"hard"`).
 - Questions can include an optional `image` (plus `imageAlt` for accessibility) to ask the player to guess a character, object or place from a picture. Put the files in `quiz/img/` and reference them as `img/your-file.jpg` (or `.webp`), or use any full URL. If an image is missing, the quiz shows a "image unavailable" placeholder instead of a broken image. The character-portrait questions follow one convention: **the file name is the answer** (e.g. `img/Macht.webp` → answer "Macht"), so the existing `img/Denken.webp`, `img/Qual.jpg`, `img/Übel.jpg`, etc. already have their questions.
 - If the picture itself would give the answer away, add `imageReveal: "after"`: the image stays **blurred under a veil** ("Answer to reveal the image") until the player answers — and it never appears if the player skips. The default (`"before"`, also used when the field is absent) shows the image immediately, like the character-portrait questions above.
 - UI strings and language detection are in `static/js/i18n.js`. Language order: `?lang=pt` in the URL → `localStorage` → browser language → English.
-- `static/js/quiz.js` holds the game logic; the round length and skips/helps limits are the `QUESTIONS_PER_ROUND`/`SKIPS_TOTAL`/`HELPS_TOTAL` constants at the top.
-- Community questions are kept in `quiz/questions.json` and merged with the base ones at load. The quiz start screen has a **Suggest a question** link that opens the GitHub Issue Form (see below).
+- `static/js/quiz.js` holds the game logic; the round length and skips/helps limits are the `QUESTIONS_PER_ROUND`/`SKIPS_TOTAL`/`HELPS_TOTAL` constants at the top. It fetches `questions.json` on load — while it is loading the Start button is disabled ("Loading…"), and if the fetch fails the screen shows an error instead of starting empty.
+- The quiz start screen also has a **Suggest a question** link that opens the GitHub Issue Form (see below); approved suggestions are appended to `quiz/questions.json` by the Action, so base and community questions share the same file.
 
 ## Suggesting a question (community)
 
@@ -102,7 +102,7 @@ One-time setup:
 
 - Create the labels `sugestao-pergunta` (applied by the form) and `aprovado` (you apply it to approve) — Issues → Labels → New label.
 - Enable PR creation by Actions: **Settings → Actions → General → Workflow permissions** → check **"Allow GitHub Actions to create and approve pull requests"**. If you prefer not to, create a personal access token and store it as the `GH_PAT` secret — the workflow uses it automatically when present.
-- The base questions stay in `static/js/quiz-data.js`; community ones live only in `quiz/questions.json`.
+- Base and community questions live in the same file (`quiz/questions.json`); the Action simply appends a new object to it, so there is nothing to keep in sync.
 
 ## Honest notes
 

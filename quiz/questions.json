@@ -1,5 +1,1496 @@
 [
     {
+        "id": "race",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "What race is Frieren?",
+            "pt-BR": "Qual é a raça de Frieren?",
+            "es": "¿De qué raza es Frieren?"
+        },
+        "options": [
+            {
+                "en": "Human",
+                "pt-BR": "Humana",
+                "es": "Humana"
+            },
+            {
+                "en": "Elf",
+                "pt-BR": "Elfa",
+                "es": "Elfa"
+            },
+            {
+                "en": "Dwarf",
+                "pt-BR": "Anã",
+                "es": "Enana"
+            },
+            {
+                "en": "Demon",
+                "pt-BR": "Demônio",
+                "es": "Demonio"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "apprentice",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "Who is Frieren's human apprentice?",
+            "pt-BR": "Quem é a aprendiz humana de Frieren?",
+            "es": "¿Quién es la aprendiz humana de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "weapon",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "What weapon does Stark wield?",
+            "pt-BR": "Que arma Stark usa?",
+            "es": "¿Qué arma usa Stark?"
+        },
+        "options": [
+            {
+                "en": "Sword",
+                "pt-BR": "Espada",
+                "es": "Espada"
+            },
+            {
+                "en": "Bow",
+                "pt-BR": "Arco",
+                "es": "Arco"
+            },
+            {
+                "en": "Axe",
+                "pt-BR": "Machado",
+                "es": "Hacha"
+            },
+            {
+                "en": "Staff",
+                "pt-BR": "Cajado",
+                "es": "Bastón"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "hero",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "Who was the hero of the party that defeated the Demon King?",
+            "pt-BR": "Quem era o herói do grupo que derrotou o Rei Demônio?",
+            "es": "¿Quién era el héroe del grupo que derrotó al Rey Demonio?"
+        },
+        "options": [
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            }
+        ],
+        "correct": 3
+    },
+    {
+        "id": "enemy",
+        "category": "story",
+        "difficulty": "easy",
+        "question": {
+            "en": "Which enemy did the heroes defeat?",
+            "pt-BR": "Qual inimigo os heróis derrotaram?",
+            "es": "¿A qué enemigo derrotaron los héroes?"
+        },
+        "options": [
+            {
+                "en": "Aura",
+                "pt-BR": "Aura",
+                "es": "Aura"
+            },
+            {
+                "en": "The Demon King",
+                "pt-BR": "O Rei Demônio",
+                "es": "El Rey Demonio"
+            },
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Lugner",
+                "pt-BR": "Lugner",
+                "es": "Lugner"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "priest",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "Who was the priest of the hero's party?",
+            "pt-BR": "Quem era o sacerdote do grupo do herói?",
+            "es": "¿Quién era el sacerdote del grupo del héroe?"
+        },
+        "options": [
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "hair",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "What is the color of Frieren's hair?",
+            "pt-BR": "Qual é a cor do cabelo de Frieren?",
+            "es": "¿Cuál es el color del cabello de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Black",
+                "pt-BR": "Preto",
+                "es": "Negro"
+            },
+            {
+                "en": "Red",
+                "pt-BR": "Ruivo",
+                "es": "Pelirrojo"
+            },
+            {
+                "en": "Silver",
+                "pt-BR": "Prateado",
+                "es": "Plateado"
+            },
+            {
+                "en": "Brown",
+                "pt-BR": "Castanho",
+                "es": "Castaño"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "fern-raised",
+        "category": "characters",
+        "difficulty": "easy",
+        "question": {
+            "en": "Who adopted and raised Fern as a child?",
+            "pt-BR": "Quem adotou e criou Fern quando criança?",
+            "es": "¿Quién adoptó y crio a Fern cuando era niña?"
+        },
+        "options": [
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "name-language",
+        "category": "trivia",
+        "difficulty": "easy",
+        "question": {
+            "en": "The characters' names are words from which language?",
+            "pt-BR": "Os nomes dos personagens são palavras de qual idioma?",
+            "es": "¿Los nombres de los personajes son palabras de qué idioma?"
+        },
+        "options": [
+            {
+                "en": "German",
+                "pt-BR": "Alemão",
+                "es": "Alemán"
+            },
+            {
+                "en": "Latin",
+                "pt-BR": "Latim",
+                "es": "Latín"
+            },
+            {
+                "en": "Japanese",
+                "pt-BR": "Japonês",
+                "es": "Japonés"
+            },
+            {
+                "en": "Old English",
+                "pt-BR": "Inglês antigo",
+                "es": "Inglés antiguo"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "img-denken",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Denken.webp",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Denken",
+                "pt-BR": "Denken",
+                "es": "Denken"
+            },
+            {
+                "en": "Ehre",
+                "pt-BR": "Ehre",
+                "es": "Ehre"
+            },
+            {
+                "en": "Methode",
+                "pt-BR": "Methode",
+                "es": "Methode"
+            },
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "img-ehre",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Ehre.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            },
+            {
+                "en": "Kanne",
+                "pt-BR": "Kanne",
+                "es": "Kanne"
+            },
+            {
+                "en": "Übel",
+                "pt-BR": "Übel",
+                "es": "Übel"
+            },
+            {
+                "en": "Ehre",
+                "pt-BR": "Ehre",
+                "es": "Ehre"
+            }
+        ],
+        "correct": 3
+    },
+    {
+        "id": "img-kanne",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Kanne.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Ehre",
+                "pt-BR": "Ehre",
+                "es": "Ehre"
+            },
+            {
+                "en": "Kanne",
+                "pt-BR": "Kanne",
+                "es": "Kanne"
+            },
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            },
+            {
+                "en": "Methode",
+                "pt-BR": "Methode",
+                "es": "Methode"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-kraft",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Kraft.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Kraft",
+                "pt-BR": "Kraft",
+                "es": "Kraft"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "img-lawine",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Lawine.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            },
+            {
+                "en": "Kanne",
+                "pt-BR": "Kanne",
+                "es": "Kanne"
+            },
+            {
+                "en": "Ehre",
+                "pt-BR": "Ehre",
+                "es": "Ehre"
+            },
+            {
+                "en": "Übel",
+                "pt-BR": "Übel",
+                "es": "Übel"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "img-linie",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Linie.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Revolte",
+                "pt-BR": "Revolte",
+                "es": "Revolte"
+            },
+            {
+                "en": "Macht",
+                "pt-BR": "Macht",
+                "es": "Macht"
+            },
+            {
+                "en": "Linie",
+                "pt-BR": "Linie",
+                "es": "Linie"
+            }
+        ],
+        "correct": 3
+    },
+    {
+        "id": "img-macht",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Macht.webp",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Macht",
+                "pt-BR": "Macht",
+                "es": "Macht"
+            },
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Übel",
+                "pt-BR": "Übel",
+                "es": "Übel"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-methode",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Methode.webp",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Ehre",
+                "pt-BR": "Ehre",
+                "es": "Ehre"
+            },
+            {
+                "en": "Kanne",
+                "pt-BR": "Kanne",
+                "es": "Kanne"
+            },
+            {
+                "en": "Methode",
+                "pt-BR": "Methode",
+                "es": "Methode"
+            },
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "img-qual",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Qual.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Linie",
+                "pt-BR": "Linie",
+                "es": "Linie"
+            },
+            {
+                "en": "Macht",
+                "pt-BR": "Macht",
+                "es": "Macht"
+            },
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Revolte",
+                "pt-BR": "Revolte",
+                "es": "Revolte"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "img-revolte",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Revolte.webp",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Linie",
+                "pt-BR": "Linie",
+                "es": "Linie"
+            },
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Macht",
+                "pt-BR": "Macht",
+                "es": "Macht"
+            },
+            {
+                "en": "Revolte",
+                "pt-BR": "Revolte",
+                "es": "Revolte"
+            }
+        ],
+        "correct": 3
+    },
+    {
+        "id": "img-ubel",
+        "category": "characters",
+        "difficulty": "easy",
+        "image": "img/Übel.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Übel",
+                "pt-BR": "Übel",
+                "es": "Übel"
+            },
+            {
+                "en": "Ehre",
+                "pt-BR": "Ehre",
+                "es": "Ehre"
+            },
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            },
+            {
+                "en": "Kanne",
+                "pt-BR": "Kanne",
+                "es": "Kanne"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "teacher",
+        "category": "characters",
+        "difficulty": "medium",
+        "question": {
+            "en": "Who was Frieren's teacher?",
+            "pt-BR": "Quem foi a mestra de Frieren?",
+            "es": "¿Quién fue la maestra de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            },
+            {
+                "en": "Aura",
+                "pt-BR": "Aura",
+                "es": "Aura"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "great-mage",
+        "category": "characters",
+        "difficulty": "medium",
+        "question": {
+            "en": "Which elven mage is known as the \"Great Mage\"?",
+            "pt-BR": "Qual maga elfa é conhecida como a \"Grande Maga\"?",
+            "es": "¿Qué maga elfa es conocida como la \"Gran Maga\"?"
+        },
+        "options": [
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Aura",
+                "pt-BR": "Aura",
+                "es": "Aura"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "collect",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "What does Frieren love to collect?",
+            "pt-BR": "O que Frieren adora colecionar?",
+            "es": "¿Qué le encanta coleccionar a Frieren?"
+        },
+        "options": [
+            {
+                "en": "Swords",
+                "pt-BR": "Espadas",
+                "es": "Espadas"
+            },
+            {
+                "en": "Spells",
+                "pt-BR": "Magias",
+                "es": "Hechizos"
+            },
+            {
+                "en": "Gems",
+                "pt-BR": "Gemas",
+                "es": "Gemas"
+            },
+            {
+                "en": "Books",
+                "pt-BR": "Livros",
+                "es": "Libros"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "dwarf",
+        "category": "characters",
+        "difficulty": "medium",
+        "question": {
+            "en": "Who was the dwarven warrior of the hero's party?",
+            "pt-BR": "Quem era o guerreiro anão do grupo do herói?",
+            "es": "¿Quién era el guerrero enano del grupo del héroe?"
+        },
+        "options": [
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "zoltraak",
+        "category": "magic",
+        "difficulty": "medium",
+        "question": {
+            "en": "Which offensive spell became the standard magic taught to mages?",
+            "pt-BR": "Qual magia ofensiva se tornou a magia padrão ensinada aos magos?",
+            "es": "¿Qué hechizo ofensivo se convirtió en la magia estándar que se enseña a los magos?"
+        },
+        "options": [
+            {
+                "en": "Zoltraak",
+                "pt-BR": "Zoltraak",
+                "es": "Zoltraak"
+            },
+            {
+                "en": "Auserlesen",
+                "pt-BR": "Auserlesen",
+                "es": "Auserlesen"
+            },
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Lugner",
+                "pt-BR": "Lugner",
+                "es": "Lugner"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "mana-suppression",
+        "category": "magic",
+        "difficulty": "medium",
+        "question": {
+            "en": "To how much of her real mana does Frieren limit herself?",
+            "pt-BR": "A quanto do seu poder mágico real Frieren se limita?",
+            "es": "¿A cuánto de su maná real se limita Frieren?"
+        },
+        "options": [
+            {
+                "en": "Half",
+                "pt-BR": "Metade",
+                "es": "La mitad"
+            },
+            {
+                "en": "One tenth",
+                "pt-BR": "Um décimo",
+                "es": "Una décima parte"
+            },
+            {
+                "en": "One hundredth",
+                "pt-BR": "Um centésimo",
+                "es": "Una centésima parte"
+            },
+            {
+                "en": "She doesn't limit it",
+                "pt-BR": "Ela não se limita",
+                "es": "No se limita"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "aureole",
+        "category": "places",
+        "difficulty": "medium",
+        "question": {
+            "en": "What is Aureole, the destination of Frieren's journey?",
+            "pt-BR": "O que é Aureole, o destino da jornada de Frieren?",
+            "es": "¿Qué es Aureole, el destino del viaje de Frieren?"
+        },
+        "options": [
+            {
+                "en": "The Demon King's castle",
+                "pt-BR": "O castelo do Rei Demônio",
+                "es": "El castillo del Rey Demonio"
+            },
+            {
+                "en": "The land where souls rest",
+                "pt-BR": "A terra onde as almas repousam",
+                "es": "La tierra donde descansan las almas"
+            },
+            {
+                "en": "The city of magic",
+                "pt-BR": "A cidade da magia",
+                "es": "La ciudad de la magia"
+            },
+            {
+                "en": "The holy city",
+                "pt-BR": "A cidade sagrada",
+                "es": "La ciudad sagrada"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "demon-king-castle",
+        "category": "places",
+        "difficulty": "medium",
+        "question": {
+            "en": "In which region is the Demon King's Castle located?",
+            "pt-BR": "Em qual região fica o Castelo do Rei Demônio?",
+            "es": "¿En qué región se encuentra el Castillo del Rey Demonio?"
+        },
+        "options": [
+            {
+                "en": "Central Lands",
+                "pt-BR": "Terras Centrais",
+                "es": "Tierras Centrales"
+            },
+            {
+                "en": "Southern Lands",
+                "pt-BR": "Terras do Sul",
+                "es": "Tierras del Sur"
+            },
+            {
+                "en": "Ende",
+                "pt-BR": "Ende",
+                "es": "Ende"
+            },
+            {
+                "en": "Äußerst",
+                "pt-BR": "Äußerst",
+                "es": "Äußerst"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "exam-frequency",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "How often is the First-Class Mage Exam held?",
+            "pt-BR": "Com que frequência é realizado o Exame de Mago de Primeira Classe?",
+            "es": "¿Con qué frecuencia se celebra el Examen de Mago de Primera Clase?"
+        },
+        "options": [
+            {
+                "en": "Every year",
+                "pt-BR": "Todo ano",
+                "es": "Cada año"
+            },
+            {
+                "en": "Every two years",
+                "pt-BR": "A cada dois anos",
+                "es": "Cada dos años"
+            },
+            {
+                "en": "Every three years",
+                "pt-BR": "A cada três anos",
+                "es": "Cada tres años"
+            },
+            {
+                "en": "Every five years",
+                "pt-BR": "A cada cinco anos",
+                "es": "Cada cinco años"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "hero-journey-years",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "How long did the Hero Party's journey to defeat the Demon King take?",
+            "pt-BR": "Quanto tempo durou a jornada do Grupo do Herói para derrotar o Rei Demônio?",
+            "es": "¿Cuánto duró el viaje del Grupo del Héroe para derrotar al Rey Demonio?"
+        },
+        "options": [
+            {
+                "en": "One year",
+                "pt-BR": "Um ano",
+                "es": "Un año"
+            },
+            {
+                "en": "Five years",
+                "pt-BR": "Cinco anos",
+                "es": "Cinco años"
+            },
+            {
+                "en": "Ten years",
+                "pt-BR": "Dez anos",
+                "es": "Diez años"
+            },
+            {
+                "en": "Fifty years",
+                "pt-BR": "Cinquenta anos",
+                "es": "Cincuenta años"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "heiter-request",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "What did Heiter ask Frieren to do before he died?",
+            "pt-BR": "O que Heiter pediu a Frieren antes de morrer?",
+            "es": "¿Qué le pidió Heiter a Frieren antes de morir?"
+        },
+        "options": [
+            {
+                "en": "Defeat a powerful demon",
+                "pt-BR": "Derrotar um demônio poderoso",
+                "es": "Derrotar a un demonio poderoso"
+            },
+            {
+                "en": "Take Fern as her apprentice",
+                "pt-BR": "Aceitar Fern como sua aprendiz",
+                "es": "Aceptar a Fern como su aprendiz"
+            },
+            {
+                "en": "Find Flamme's grimoire",
+                "pt-BR": "Encontrar o grimório de Flamme",
+                "es": "Encontrar el grimorio de Flamme"
+            },
+            {
+                "en": "Rebuild his church",
+                "pt-BR": "Reconstruir sua igreja",
+                "es": "Reconstruir su iglesia"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "sein",
+        "category": "characters",
+        "difficulty": "medium",
+        "question": {
+            "en": "Which priest temporarily joins Frieren's party on her journey?",
+            "pt-BR": "Qual sacerdote se junta temporariamente ao grupo de Frieren em sua jornada?",
+            "es": "¿Qué sacerdote se une temporalmente al grupo de Frieren en su viaje?"
+        },
+        "options": [
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Sein",
+                "pt-BR": "Sein",
+                "es": "Sein"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Denken",
+                "pt-BR": "Denken",
+                "es": "Denken"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "association-founder",
+        "category": "magic",
+        "difficulty": "medium",
+        "question": {
+            "en": "Who founded the Continental Magic Association?",
+            "pt-BR": "Quem fundou a Associação Continental de Magia?",
+            "es": "¿Quién fundó la Asociación Continental de Magia?"
+        },
+        "options": [
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "favorite-spell",
+        "category": "magic",
+        "difficulty": "medium",
+        "question": {
+            "en": "What is Frieren's favorite spell?",
+            "pt-BR": "Qual é a magia favorita de Frieren?",
+            "es": "¿Cuál es el hechizo favorito de Frieren?"
+        },
+        "options": [
+            {
+                "en": "A spell that conjures a field of flowers",
+                "pt-BR": "Uma magia que conjura um campo de flores",
+                "es": "Un hechizo que conjura un campo de flores"
+            },
+            {
+                "en": "A spell that turns sweet grapes sour",
+                "pt-BR": "Uma magia que transforma uvas doces em azedas",
+                "es": "Un hechizo que convierte uvas dulces en agrias"
+            },
+            {
+                "en": "A spell that removes rust from bronze statues",
+                "pt-BR": "Uma magia que remove ferrugem de estátuas de bronze",
+                "es": "Un hechizo que quita el óxido de las estatuas de bronce"
+            },
+            {
+                "en": "A spell that conjures hot tea",
+                "pt-BR": "Uma magia que conjura chá quente",
+                "es": "Un hechizo que conjura té caliente"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "hero-sword",
+        "category": "story",
+        "difficulty": "hard",
+        "question": {
+            "en": "What is true about Himmel and the Sword of the Hero?",
+            "pt-BR": "O que é verdade sobre Himmel e a Espada do Herói?",
+            "es": "¿Qué es cierto sobre Himmel y la Espada del Héroe?"
+        },
+        "options": [
+            {
+                "en": "He pulled it from the stone",
+                "pt-BR": "Ele a retirou da pedra",
+                "es": "La sacó de la piedra"
+            },
+            {
+                "en": "He was never able to pull it from the stone",
+                "pt-BR": "Ele nunca conseguiu retirá-la da pedra",
+                "es": "Nunca pudo sacarla de la piedra"
+            },
+            {
+                "en": "He forged it himself",
+                "pt-BR": "Ele mesmo a forjou",
+                "es": "La forjó él mismo"
+            },
+            {
+                "en": "The Demon King destroyed it",
+                "pt-BR": "O Rei Demônio a destruiu",
+                "es": "El Rey Demonio la destruyó"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "serie-flamme",
+        "category": "characters",
+        "difficulty": "hard",
+        "question": {
+            "en": "How is Serie related to Flamme?",
+            "pt-BR": "Qual é a relação de Serie com Flamme?",
+            "es": "¿Cómo se relaciona Serie con Flamme?"
+        },
+        "options": [
+            {
+                "en": "Serie is Flamme's apprentice",
+                "pt-BR": "Serie é aprendiz de Flamme",
+                "es": "Serie es aprendiz de Flamme"
+            },
+            {
+                "en": "Serie is Flamme's master",
+                "pt-BR": "Serie é a mestra de Flamme",
+                "es": "Serie es la maestra de Flamme"
+            },
+            {
+                "en": "They are sisters",
+                "pt-BR": "Elas são irmãs",
+                "es": "Son hermanas"
+            },
+            {
+                "en": "They never met",
+                "pt-BR": "Elas nunca se conheceram",
+                "es": "Nunca se conocieron"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "zoltraak-inventor",
+        "category": "magic",
+        "difficulty": "hard",
+        "question": {
+            "en": "Who invented the killing magic Zoltraak?",
+            "pt-BR": "Quem inventou a magia assassina Zoltraak?",
+            "es": "¿Quién inventó la magia asesina Zoltraak?"
+        },
+        "options": [
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Aura",
+                "pt-BR": "Aura",
+                "es": "Aura"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "aura-spell",
+        "category": "magic",
+        "difficulty": "hard",
+        "question": {
+            "en": "What is the name of Aura's signature spell?",
+            "pt-BR": "Qual é o nome da magia característica de Aura?",
+            "es": "¿Cuál es el nombre del hechizo característico de Aura?"
+        },
+        "options": [
+            {
+                "en": "Auserlese",
+                "pt-BR": "Auserlese",
+                "es": "Auserlese"
+            },
+            {
+                "en": "Zoltraak",
+                "pt-BR": "Zoltraak",
+                "es": "Zoltraak"
+            },
+            {
+                "en": "Erfassen",
+                "pt-BR": "Erfassen",
+                "es": "Erfassen"
+            },
+            {
+                "en": "Balterie",
+                "pt-BR": "Balterie",
+                "es": "Balterie"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "city-magic",
+        "category": "places",
+        "difficulty": "hard",
+        "question": {
+            "en": "Which city is known as the \"City of Magic\"?",
+            "pt-BR": "Qual cidade é conhecida como a \"Cidade da Magia\"?",
+            "es": "¿Qué ciudad es conocida como la \"Ciudad de la Magia\"?"
+        },
+        "options": [
+            {
+                "en": "Strahl",
+                "pt-BR": "Strahl",
+                "es": "Strahl"
+            },
+            {
+                "en": "Äußerst",
+                "pt-BR": "Äußerst",
+                "es": "Äußerst"
+            },
+            {
+                "en": "Waal",
+                "pt-BR": "Waal",
+                "es": "Waal"
+            },
+            {
+                "en": "Ende",
+                "pt-BR": "Ende",
+                "es": "Ende"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "holy-city",
+        "category": "places",
+        "difficulty": "hard",
+        "question": {
+            "en": "Which city is the Holy City and seat of the Continental Magic Association's headquarters?",
+            "pt-BR": "Qual cidade é a Cidade Sagrada e sede da Associação Continental de Magia?",
+            "es": "¿Qué ciudad es la Ciudad Sagrada y sede de la Asociación Continental de Magia?"
+        },
+        "options": [
+            {
+                "en": "Äußerst",
+                "pt-BR": "Äußerst",
+                "es": "Äußerst"
+            },
+            {
+                "en": "Vorig",
+                "pt-BR": "Vorig",
+                "es": "Vorig"
+            },
+            {
+                "en": "Strahl",
+                "pt-BR": "Strahl",
+                "es": "Strahl"
+            },
+            {
+                "en": "Waal",
+                "pt-BR": "Waal",
+                "es": "Waal"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "stark-brother",
+        "category": "characters",
+        "difficulty": "hard",
+        "question": {
+            "en": "What is the name of Stark's older brother?",
+            "pt-BR": "Qual é o nome do irmão mais velho de Stark?",
+            "es": "¿Cómo se llama el hermano mayor de Stark?"
+        },
+        "options": [
+            {
+                "en": "Stoltz",
+                "pt-BR": "Stoltz",
+                "es": "Stoltz"
+            },
+            {
+                "en": "Sein",
+                "pt-BR": "Sein",
+                "es": "Sein"
+            },
+            {
+                "en": "Wirbel",
+                "pt-BR": "Wirbel",
+                "es": "Wirbel"
+            },
+            {
+                "en": "Graf Granat",
+                "pt-BR": "Graf Granat",
+                "es": "Graf Granat"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "south-hero-sages",
+        "category": "story",
+        "difficulty": "hard",
+        "question": {
+            "en": "Who faced all Seven Sages of Destruction at the same time and still defeated three of them?",
+            "pt-BR": "Quem enfrentou os Sete Sábios da Destruição todos ao mesmo tempo e ainda derrotou três deles?",
+            "es": "¿Quién se enfrentó a los Siete Sabios de la Destrucción todos a la vez y aun así derrotó a tres de ellos?"
+        },
+        "options": [
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "The Hero of the South",
+                "pt-BR": "O Herói do Sul",
+                "es": "El Héroe del Sur"
+            },
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-serie",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Serie.jpg",
+        "imageAlt": {
+            "en": "Elven great mage with golden hair",
+            "pt-BR": "Grande maga elfa de cabelo dourado",
+            "es": "Gran maga elfa de cabello dorado"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            }
+        ],
+        "correct": 1
+    },
+    {
         "id": "community-2",
         "category": "story",
         "difficulty": "medium",

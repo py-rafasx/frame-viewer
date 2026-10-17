@@ -81,6 +81,7 @@
         .hero .suggest { margin: 2px 0 0; font-size: 13px; }
         .hero .suggest a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
         .hero .suggest a:hover { color: var(--ink); }
+        .load-status { font-size: 13px; color: var(--no); line-height: 1.5; max-width: 42ch; }
 
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -225,6 +226,7 @@
                 <p class="subtitle" id="subtitle">How well do you know Frieren: Beyond Journey's End?</p>
                 <div class="meta" id="meta"></div>
                 <button class="btn solid big" id="start-btn" type="button">Start quiz</button>
+                <p class="load-status" id="load-status" hidden></p>
                 <p class="suggest"><a id="suggest-link" href="https://github.com/py-rafasx/frame-viewer/issues/new?template=sugestao-pergunta.yml" target="_blank" rel="noopener">Suggest a question</a></p>
             </section>
 
@@ -278,7 +280,6 @@
     </div>
 
     <script src="../static/js/i18n.js"></script>
-    <script src="../static/js/quiz-data.js"></script>
     <script src="../static/js/quiz.js"></script>
 </body>
 </html>

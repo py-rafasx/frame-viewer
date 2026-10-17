@@ -1,5 +1,6 @@
 // Frieren Quiz — lógica única da página quiz/.
-// Depende de i18n.js e quiz-data.js (carregados antes no HTML).
+// Depende de i18n.js (carregado antes no HTML) e de quiz/questions.json, buscado
+// em tempo de execução (fonte única das perguntas: base + comunidade).
 //
 // Recursos: respostas pré-selecionadas (múltipla escolha), pulos limitados,
 // ajuda "eliminar uma resposta" e pontuação final. Multi-idioma via i18n.js.
@@ -43,30 +44,43 @@ const el = {
     brand_sub: document.getElementById("brand-sub"),
     back_link: document.getElementById("back-link"),
     suggest_link: document.getElementById("suggest-link"),
-    lang_label: document.getElementById("lang-label")
+    lang_label: document.getElementById("lang-label"),
+    load_status: document.getElementById("load-status")
 };
 
-// Perguntas da comunidade ficam em quiz/questions.json (adicionadas via Issue Form
-// + GitHub Action). São mescladas às perguntas base de quiz-data.js em tempo de execução.
-const COMMUNITY_QUESTIONS_URL = "questions.json";
+// Todas as perguntas (base + comunidade) vivem em quiz/questions.json — fonte única.
+// A Action de sugestões faz push no mesmo arquivo (.github/scripts/add-question.js),
+// então não há mais perguntas embutidas em JS.
+const QUESTIONS_URL = "questions.json";
+let QUIZ_QUESTIONS = [];
+let questions_ready = false;
+let questions_error = false;
 
-function load_community_questions() {
-    return fetch(COMMUNITY_QUESTIONS_URL, { cache: "no-store" })
-        .then(function (response) { return response.ok ? response.text() : ""; })
-        .then(function (text) {
-            if (!text) return;
-            let list;
-            try {
-                list = JSON.parse(text.replace(/^\uFEFF/, ""));
-            } catch (_) {
-                return;
-            }
-            if (!Array.isArray(list)) return;
-            list.forEach(function (q) {
-                if (q && q.id && q.question && Array.isArray(q.options)) QUIZ_QUESTIONS.push(q);
-            });
+function load_questions() {
+    return fetch(QUESTIONS_URL, { cache: "no-store" })
+        .then(function (response) {
+            if (!response.ok) throw new Error("HTTP " + response.status);
+            return response.text();
         })
-        .catch(function () { /* offline / file:// — segue só com as perguntas locais */ });
+        .then(function (text) {
+            const list = JSON.parse(text.replace(/^\uFEFF/, ""));
+            if (!Array.isArray(list)) throw new Error("questions.json não é uma lista");
+            QUIZ_QUESTIONS = list.filter(function (q) {
+                return q && q.id && q.question && Array.isArray(q.options);
+            });
+            if (QUIZ_QUESTIONS.length === 0) throw new Error("nenhuma pergunta válida");
+            questions_ready = true;
+            questions_error = false;
+        })
+        .catch(function (error) {
+            questions_ready = false;
+            questions_error = true;
+            console.error("Falha ao carregar as perguntas:", error);
+        })
+        .then(function () {
+            apply_static_texts();
+            render();
+        });
 }
 
 // ------------------------------------------------------------------ estado
@@ -153,20 +167,38 @@ function apply_static_texts() {
     el.hero_title.textContent = t("title");
     el.subtitle.textContent = t("subtitle");
     el.meta.innerHTML = "";
-    [
-        t("metaQuestions", { n: round_total() }),
-        t("metaSkips", { n: SKIPS_TOTAL }),
-        t("metaRemoves", { n: HELPS_TOTAL })
-    ].forEach(function (text) {
-        const span = document.createElement("span");
-        span.textContent = text;
-        el.meta.appendChild(span);
-    });
+    if (questions_ready) {
+        [
+            t("metaQuestions", { n: round_total() }),
+            t("metaSkips", { n: SKIPS_TOTAL }),
+            t("metaRemoves", { n: HELPS_TOTAL })
+        ].forEach(function (text) {
+            const span = document.createElement("span");
+            span.textContent = text;
+            el.meta.appendChild(span);
+        });
+    }
     el.brand_sub.textContent = t("brandSub");
     el.back_link.textContent = t("backToViewer");
     if (el.suggest_link) el.suggest_link.textContent = t("suggestQuestion");
     el.lang_label.textContent = t("language");
-    el.start_btn.textContent = t("start");
+
+    // botão iniciar: reflete o carregamento (ou falha) de questions.json
+    if (questions_error) {
+        el.start_btn.textContent = t("start");
+        el.start_btn.disabled = true;
+    } else if (!questions_ready) {
+        el.start_btn.textContent = t("loading");
+        el.start_btn.disabled = true;
+    } else {
+        el.start_btn.textContent = t("start");
+        el.start_btn.disabled = false;
+    }
+    if (el.load_status) {
+        el.load_status.hidden = !questions_error;
+        el.load_status.textContent = questions_error ? t("loadError") : "";
+    }
+
     el.restart_btn.textContent = t("playAgain");
     document.getElementById("results-title").textContent = t("resultsTitle");
     document.getElementById("label-score").textContent = t("yourScore");
@@ -407,6 +439,7 @@ function next() {
 }
 
 function start() {
+    if (!questions_ready || QUIZ_QUESTIONS.length === 0) return;
     state = fresh_state();
     set_current(pick_next());
     state.asked = 1;
@@ -439,7 +472,7 @@ el.next_btn.addEventListener("click", next);
     fill_lang_select();
     apply_static_texts();
     render();
-    // As perguntas da comunidade chegam de forma assíncrona; como as pools são
-    // montadas de novo em start(), elas já entram se carregarem antes do clique.
-    load_community_questions();
+    // As perguntas vêm de questions.json (fetch); o botão inicia desabilitado
+    // ("Carregando…") e é liberado quando o arquivo chega (apply_static_texts).
+    load_questions();
 })();
