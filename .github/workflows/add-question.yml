@@ -58,10 +58,12 @@ jobs:
         if: steps.process.outputs.ok == 'true' && steps.pr.outputs.pull-request-url != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh issue comment ${{ github.event.issue.number }} --body "PR aberto para revisão: ${{ steps.pr.outputs.pull-request-url }}"
+          COMMENT: "PR aberto para revisão: ${{ steps.pr.outputs.pull-request-url }}"
+        run: gh issue comment ${{ github.event.issue.number }} --body "$COMMENT"
 
       - name: Comment error on issue
         if: steps.process.outputs.ok != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh issue comment ${{ github.event.issue.number }} --body "Não consegui montar a pergunta automaticamente: **${{ steps.process.outputs.error }}**. Confira os campos do formulário; depois remova e reaplique o rótulo \`aprovado\` para tentar de novo."
+          COMMENT: "Não consegui montar a pergunta automaticamente. Erro: ${{ steps.process.outputs.error }}. Confira os campos do formulário e reaplique o rótulo 'aprovado' para tentar de novo."
+        run: gh issue comment ${{ github.event.issue.number }} --body "$COMMENT"
