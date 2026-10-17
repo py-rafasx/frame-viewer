@@ -1,1 +1,41 @@
-[]
+[
+    {
+        "id": "community-2",
+        "category": "story",
+        "difficulty": "medium",
+        "image": "img/1000.png",
+        "imageAlt": {
+            "en": "Image for the question",
+            "pt-BR": "Imagem da pergunta",
+            "es": "Imagen de la pregunta"
+        },
+        "question": {
+            "en": "How old is Frieren?",
+            "pt-BR": "Qual a idade da Frieren?",
+            "es": "¿Qué edad tiene Frieren?"
+        },
+        "options": [
+            {
+                "en": "100",
+                "pt-BR": "100",
+                "es": "100"
+            },
+            {
+                "en": "250",
+                "pt-BR": "250",
+                "es": "250"
+            },
+            {
+                "en": "750",
+                "pt-BR": "750",
+                "es": "750"
+            },
+            {
+                "en": "+1000",
+                "pt-BR": "+1000",
+                "es": "+1000"
+            }
+        ],
+        "correct": 3
+    }
+]
