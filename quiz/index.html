@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Frieren Quiz</title>
+    <link rel="icon" href="../static/chibi-frieren.jpeg">
+    <style>
+        :root {
+            --paper: #faf9f6;
+            --paper-deep: #f2f0eb;
+            --ink: #1d1c19;
+            --muted: #6f6a5f;
+            --line: #e7e3da;
+            --line-strong: #d5d0c4;
+            --black: #1d1c19;
+            --ok: #1f7a4d;
+            --ok-bg: #eaf6ef;
+            --no: #a01c1c;
+            --no-bg: #fbebeb;
+            --serif: Georgia, 'Times New Roman', serif;
+            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        [hidden] { display: none !important; }
+        :focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+        html, body { min-height: 100%; }
+        body {
+            font-family: var(--sans); color: var(--ink);
+            background: var(--paper); min-height: 100dvh;
+            display: flex; justify-content: center;
+            padding: calc(18px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: url('../static/fundo.jpg') center/cover no-repeat;
+            opacity: .05; filter: blur(10px);
+        }
+
+        .shell { width: 100%; max-width: 660px; display: flex; flex-direction: column; gap: 18px; }
+
+        /* ---------- cabeçalho ---------- */
+        /* wordmark em linha própria; controles (idioma) na linha de baixo em telas estreitas */
+        .top { display: flex; flex-direction: column; gap: 10px; }
+        .brand { display: flex; align-items: baseline; gap: 9px; min-width: 0; }
+        .brand .wordmark { font-family: var(--serif); font-size: 20px; font-weight: 700; letter-spacing: -.3px; white-space: nowrap; }
+        .brand .wordmark i { font-style: normal; color: var(--muted); }
+        .brand .sub { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2.6px; font-weight: 600; white-space: nowrap; }
+        .top-right { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+        .lang-wrap { display: inline-flex; align-items: center; gap: 6px; }
+        @media (min-width: 560px) {
+            .top { flex-direction: row; align-items: center; gap: 12px; }
+            .brand { flex: 1; }
+        }
+        #lang-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.6px; font-weight: 700; color: var(--muted); }
+        #lang-select {
+            appearance: none; -webkit-appearance: none;
+            font-family: inherit; font-size: 13px; font-weight: 600; color: var(--ink);
+            background: var(--paper-deep) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238b857a' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 11px center;
+            border: 1px solid var(--line-strong); border-radius: 30px;
+            padding: 7px 28px 7px 12px; cursor: pointer;
+        }
+
+        /* ---------- card ---------- */
+        .card {
+            background: rgba(250,249,246,0.92); backdrop-filter: blur(6px);
+            border: 1px solid var(--line); border-radius: 8px;
+            box-shadow: 0 18px 44px rgba(0,0,0,0.06);
+            padding: 26px 24px;
+        }
+
+        /* ---------- tela inicial ---------- */
+        .hero { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 22px 6px; }
+        .hero .title { font-family: var(--serif); font-size: clamp(28px, 6vw, 40px); font-weight: 700; letter-spacing: -.6px; }
+        .hero .title i { font-style: normal; color: var(--muted); }
+        .hero .subtitle { font-size: 15px; color: var(--muted); max-width: 40ch; line-height: 1.5; }
+        .hero .meta { display: flex; gap: 18px; margin-top: 4px; font-size: 12px; color: var(--muted); }
+        .hero .meta b { color: var(--ink); font-weight: 700; }
+        .hero .suggest { margin: 2px 0 0; font-size: 13px; }
+        .hero .suggest a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+        .hero .suggest a:hover { color: var(--ink); }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            height: 46px; padding: 0 22px; border-radius: 30px;
+            border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+            cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit;
+            transition: transform .15s, box-shadow .2s, border-color .2s, background .2s;
+            white-space: nowrap;
+        }
+        .btn:hover { border-color: var(--black); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .btn.solid { background: var(--black); border-color: var(--black); color: #f5f2ea; }
+        .btn.solid:hover { background: #34322c; border-color: #34322c; }
+        .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn.big { height: 50px; font-size: 15px; padding: 0 30px; }
+
+        /* ---------- jogo ---------- */
+        .progress-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+        #question-progress { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); }
+        .difficulty-badge {
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px;
+            padding: 3px 10px; border-radius: 30px; border: 1px solid var(--line-strong);
+            background: var(--paper-deep); color: var(--muted); white-space: nowrap;
+        }
+        .difficulty-badge.easy { color: var(--ok); border-color: var(--ok); background: var(--ok-bg); }
+        .difficulty-badge.medium { color: #8a6d1a; border-color: #d9c07a; background: #faf3dd; }
+        .difficulty-badge.hard { color: var(--no); border-color: var(--no); background: var(--no-bg); }
+        .progress-track { height: 4px; border-radius: 3px; background: var(--line-strong); overflow: hidden; margin-bottom: 22px; }
+        #progress-fill { height: 100%; width: 0; background: var(--ink); border-radius: 3px; transition: width .3s ease; }
+
+        /* ---------- mídia da pergunta (imagem de personagem/objeto/lugar) ---------- */
+        .question-media { margin-bottom: 18px; }
+        .question-image {
+            display: block; width: 100%; max-height: 35vh; object-fit: contain;
+            background: var(--paper-deep); border: 1px solid var(--line-strong); border-radius: 8px;
+        }
+        .image-unavailable {
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            height: 180px; padding: 10px;
+            background: var(--paper-deep); border: 1px dashed var(--line-strong);
+            border-radius: 8px; color: var(--muted);
+            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px;
+        }
+
+        #question-text { font-family: var(--serif); font-size: clamp(19px, 3.4vw, 24px); font-weight: 700; line-height: 1.35; margin-bottom: 20px; }
+
+        #options {
+            list-style: none; display: grid; gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .option {
+            width: 100%; display: flex; align-items: center; gap: 14px; text-align: left;
+            padding: 14px 16px; border-radius: 6px; cursor: pointer;
+            border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+            font-family: inherit; font-size: 15px; font-weight: 500; line-height: 1.35;
+            transition: border-color .15s, background .15s, transform .1s, box-shadow .15s;
+        }
+        .option:hover:not(:disabled) { border-color: var(--black); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .option:active:not(:disabled) { transform: scale(0.995); }
+        .option-badge {
+            flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; color: var(--muted);
+            background: var(--paper-deep); border: 1px solid var(--line);
+        }
+        .option-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+        .option:disabled { cursor: default; }
+        .option.correct { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+        .option.correct .option-badge { background: var(--ok); border-color: var(--ok); color: #fff; }
+        .option.wrong { background: var(--no-bg); border-color: var(--no); color: var(--no); }
+        .option.wrong .option-badge { background: var(--no); border-color: var(--no); color: #fff; }
+        .option.dim { opacity: .5; }
+        .option.eliminated { opacity: .32; text-decoration: line-through; }
+
+        .actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+        .actions .btn { flex: 1; min-width: 140px; }
+
+        #feedback { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+        .feedback-title { font-size: 16px; font-weight: 700; }
+        .feedback-title.ok { color: var(--ok); }
+        .feedback-title.no { color: var(--no); }
+        .feedback-detail { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+        #next-btn { margin-top: 18px; width: 100%; }
+
+        /* ---------- resultado ---------- */
+        .results { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .results .title { font-family: var(--serif); font-size: clamp(24px, 5vw, 32px); font-weight: 700; }
+        .score-big { font-family: var(--serif); font-size: clamp(52px, 14vw, 80px); font-weight: 700; line-height: 1; letter-spacing: -2px; margin: 8px 0 4px; }
+        .score-big small { font-size: .35em; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+        .score-caption { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.4px; color: var(--muted); }
+        .result-stats { display: flex; gap: 10px; margin: 22px 0 6px; width: 100%; }
+        .result-stats .stat { flex: 1; background: var(--paper-deep); border: 1px solid var(--line); border-radius: 6px; padding: 14px 8px; }
+        .result-stats .stat .num { font-family: var(--serif); font-size: 22px; font-weight: 700; }
+        .result-stats .stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--muted); font-weight: 700; margin-top: 4px; }
+        #restart-btn { margin-top: 20px; }
+
+        .back { text-align: center; }
+        #back-link { color: var(--muted); font-size: 12.5px; font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; }
+        #back-link:hover { color: var(--ink); border-bottom-color: var(--line-strong); }
+
+        @media (max-width: 520px) {
+            body { padding-left: 10px; padding-right: 10px; }
+            .card { padding: 18px 14px; }
+            .brand .sub { display: none; }
+            #options { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+            .option { padding: 12px; gap: 10px; font-size: 14px; }
+            .option-badge { width: 22px; height: 22px; font-size: 11px; }
+            .result-stats { flex-wrap: wrap; }
+            .result-stats .stat { flex: 1 1 40%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header class="top">
+            <div class="brand">
+                <span class="wordmark">Frieren<i>.Frames</i></span>
+                <span class="sub" id="brand-sub">Quiz</span>
+            </div>
+            <div class="top-right">
+                <div class="lang-wrap">
+                    <label id="lang-label" for="lang-select">Language</label>
+                    <select id="lang-select" aria-label="Language"></select>
+                </div>
+            </div>
+        </header>
+
+        <main class="card">
+            <!-- tela inicial -->
+            <section id="screen-start" class="hero">
+                <h1 class="title" id="hero-title">Frieren<i>.</i> Quiz</h1>
+                <p class="subtitle" id="subtitle">How well do you know Frieren: Beyond Journey's End?</p>
+                <div class="meta" id="meta"></div>
+                <button class="btn solid big" id="start-btn" type="button">Start quiz</button>
+                <p class="suggest"><a id="suggest-link" href="https://github.com/py-rafasx/frame-viewer/issues/new?template=sugestao-pergunta.yml" target="_blank" rel="noopener">Suggest a question</a></p>
+            </section>
+
+            <!-- jogo -->
+            <section id="screen-play" hidden>
+                <div class="progress-head">
+                    <span id="question-progress">Question 1 of 10</span>
+                    <span id="difficulty-badge" class="difficulty-badge">Easy</span>
+                </div>
+                <div class="progress-track"><div id="progress-fill"></div></div>
+
+                <div id="question-media" class="question-media" hidden></div>
+                <h2 id="question-text">—</h2>
+                <ul id="options"></ul>
+
+                <div class="actions" id="actions">
+                    <button class="btn" id="skip-btn" type="button">Skip</button>
+                    <button class="btn" id="eliminate-btn" type="button">Remove one</button>
+                </div>
+
+                <div id="feedback" hidden></div>
+                <button class="btn solid" id="next-btn" type="button" hidden>Next</button>
+            </section>
+
+            <!-- resultado -->
+            <section id="screen-results" class="results" hidden>
+                <h2 class="title" id="results-title">Quiz complete</h2>
+                <div class="score-big" id="result-score">0%</div>
+                <div class="score-caption" id="label-score">Your score</div>
+                <div class="result-stats">
+                    <div class="stat">
+                        <div class="num" id="result-correct">0 / 10</div>
+                        <div class="lbl" id="label-correct">Correct answers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" id="result-skips">0</div>
+                        <div class="lbl" id="label-skips">Skips used</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" id="result-helps">0</div>
+                        <div class="lbl" id="label-helps">Helps used</div>
+                    </div>
+                </div>
+                <button class="btn solid big" id="restart-btn" type="button">Play again</button>
+            </section>
+        </main>
+
+        <div class="back">
+            <a id="back-link" href="../">Back to viewer</a>
+        </div>
+    </div>
+
+    <script src="../static/js/i18n.js"></script>
+    <script src="../static/js/quiz-data.js"></script>
+    <script src="../static/js/quiz.js"></script>
+</body>
+</html>
