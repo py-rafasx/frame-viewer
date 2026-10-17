@@ -1,0 +1,67 @@
+name: Add approved quiz question
+
+# Quando o dono do repo aplica o rótulo "aprovado" numa issue do formulário,
+# a pergunta é adicionada a quiz/questions.json (com a imagem) e um PR é aberto.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: add-question-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  add-question:
+    if: github.event.label.name == 'aprovado'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build question from issue
+        id: process
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: node .github/scripts/add-question.js
+
+      - name: Create pull request
+        id: pr
+        if: steps.process.outputs.ok == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          branch: question/issue-${{ github.event.issue.number }}
+          delete-branch: true
+          commit-message: "feat(quiz): pergunta da issue #${{ github.event.issue.number }}"
+          title: "feat(quiz): pergunta sugerida na issue #${{ github.event.issue.number }}"
+          labels: |
+            question
+          body: |
+            Adiciona a pergunta enviada na issue #${{ github.event.issue.number }}.
+
+            Revise o texto, as traduções e a imagem antes de mesclar.
+
+            Closes #${{ github.event.issue.number }}
+
+      - name: Comment PR link on issue
+        if: steps.process.outputs.ok == 'true' && steps.pr.outputs.pull-request-url != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue comment ${{ github.event.issue.number }} --body "PR aberto para revisão: ${{ steps.pr.outputs.pull-request-url }}"
+
+      - name: Comment error on issue
+        if: steps.process.outputs.ok != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue comment ${{ github.event.issue.number }} --body "Não consegui montar a pergunta automaticamente: **${{ steps.process.outputs.error }}**. Confira os campos do formulário; depois remova e reaplique o rótulo \`aprovado\` para tentar de novo."

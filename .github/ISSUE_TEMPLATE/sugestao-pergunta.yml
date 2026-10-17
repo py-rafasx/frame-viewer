@@ -1,0 +1,138 @@
+name: Sugerir uma pergunta
+description: Envie uma pergunta (com imagem opcional) para o quiz de Frieren
+title: "[Pergunta] "
+labels: ["sugestao-pergunta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por contribuir com o quiz! Preencha os campos abaixo.
+        Quando a sua sugestão for aprovada, ela vira uma pergunta de verdade no quiz.
+
+  - type: dropdown
+    id: categoria
+    attributes:
+      label: Categoria
+      options:
+        - Characters
+        - Magic
+        - Places
+        - Story
+        - Trivia
+    validations:
+      required: true
+
+  - type: dropdown
+    id: dificuldade
+    attributes:
+      label: Dificuldade
+      options:
+        - Easy
+        - Medium
+        - Hard
+    validations:
+      required: true
+
+  - type: textarea
+    id: pergunta_en
+    attributes:
+      label: Pergunta (English)
+      placeholder: Who is Frieren's human apprentice?
+    validations:
+      required: true
+
+  - type: textarea
+    id: pergunta_pt
+    attributes:
+      label: Pergunta (Português BR)
+      placeholder: Quem é a aprendiz humana de Frieren?
+    validations:
+      required: true
+
+  - type: textarea
+    id: pergunta_es
+    attributes:
+      label: Pergunta (Español)
+      placeholder: ¿Quién es la aprendiz humana de Frieren?
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        **Alternativas** — em cada campo, escreva até 3 linhas, nesta ordem:
+        1ª = English, 2ª = Português (BR), 3ª = Español.
+        Se o texto for igual nos três idiomas (ex.: um nome próprio), escreva só uma linha.
+
+  - type: textarea
+    id: alt_a
+    attributes:
+      label: Alternativa A
+      placeholder: |
+        Himmel
+        Himmel
+        Himmel
+    validations:
+      required: true
+
+  - type: textarea
+    id: alt_b
+    attributes:
+      label: Alternativa B
+      placeholder: |
+        Fern
+        Fern
+        Fern
+    validations:
+      required: true
+
+  - type: textarea
+    id: alt_c
+    attributes:
+      label: Alternativa C
+      placeholder: |
+        Stark
+        Stark
+        Stark
+    validations:
+      required: true
+
+  - type: textarea
+    id: alt_d
+    attributes:
+      label: Alternativa D
+      placeholder: |
+        Serie
+        Serie
+        Serie
+    validations:
+      required: true
+
+  - type: dropdown
+    id: correta
+    attributes:
+      label: Resposta correta
+      options:
+        - A
+        - B
+        - C
+        - D
+    validations:
+      required: true
+
+  - type: textarea
+    id: imagem
+    attributes:
+      label: Imagem
+      description: Opcional. Arraste e solte o arquivo de imagem aqui (ele é anexado à issue) ou cole uma URL de imagem.
+      placeholder: "![descrição](https://...)"
+    validations:
+      required: false
+
+  - type: input
+    id: texto_alternativo
+    attributes:
+      label: Texto alternativo da imagem
+      description: Opcional. Descreve a imagem para acessibilidade. Se ficar vazio, usamos uma descrição genérica (a resposta não é revelada).
+    validations:
+      required: false
