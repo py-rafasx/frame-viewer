@@ -42,7 +42,8 @@ class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         """Block hidden files/folders (.git, etc.) from being served."""
         path = super().translate_path(path)
         rel = os.path.relpath(path, SCRIPT_DIR)
-        if any(part.startswith('.') for part in rel.split(os.sep)):
+        # '.' é o próprio diretório-raiz e '.'/'..' não são arquivos ocultos.
+        if any(part.startswith('.') and part not in ('.', '..') for part in rel.split(os.sep)):
             return os.path.join(SCRIPT_DIR, '__blocked__')
         return path
 
