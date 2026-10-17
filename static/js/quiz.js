@@ -8,11 +8,14 @@
 const SKIPS_TOTAL = 3;
 const HELPS_TOTAL = 3;
 
-// Quiz adaptativo: quantidade de perguntas por rodada e níveis de dificuldade.
-// Começa no nível easy e sobe/desce conforme os acertos/erros.
+// Rodada: 10 perguntas escolhidas de forma equilibrada entre os níveis de
+// dificuldade (cota por nível) e embaralhadas — sem viés de "sempre fácil".
+// Perguntas já vistas são preteridas (anti-repetição via localStorage).
 const QUESTIONS_PER_ROUND = 10;
 const DIFFICULTY_ORDER = ["easy", "medium", "hard"];
 const DIFFICULTY_KEYS = { easy: "diffEasy", medium: "diffMedium", hard: "diffHard" };
+const DIFFICULTY_QUOTA = { easy: 3, medium: 4, hard: 3 };
+const SEEN_STORAGE_KEY = "frieren-quiz-seen";
 
 let state = null;
 
@@ -96,46 +99,77 @@ function shuffle(array) {
     return arr;
 }
 
-function build_pools() {
-    const pools = {};
-    for (const level of DIFFICULTY_ORDER) {
-        pools[level] = shuffle(QUIZ_QUESTIONS.filter(function (q) {
-            return q.difficulty === level;
-        }));
-    }
-    return pools;
-}
-
 // Quantas perguntas a rodada tem (limitado pelo total disponível).
 function round_total() {
     return Math.min(QUESTIONS_PER_ROUND, QUIZ_QUESTIONS.length);
 }
 
-// Escolhe a próxima pergunta: tenta o nível atual e, se esgotado,
-// busca nos níveis vizinhos (mais fácil primeiro, depois o mais difícil).
-function pick_next() {
-    const start = state.level; // índice direto em DIFFICULTY_ORDER (0=easy, 1=medium, 2=hard)
-    const order = [];
-    for (let offset = 0; offset < DIFFICULTY_ORDER.length; offset++) {
-        const down = start - offset;
-        const up = start + offset;
-        if (down >= 0) order.push(DIFFICULTY_ORDER[down]);
-        if (offset > 0 && up < DIFFICULTY_ORDER.length) order.push(DIFFICULTY_ORDER[up]);
+// Anti-repetição: ids já vistos ficam no localStorage. Quando todas as
+// perguntas já foram vistas, o ciclo recomeça automaticamente.
+function load_seen() {
+    let stored = null;
+    try { stored = localStorage.getItem(SEEN_STORAGE_KEY); } catch (_) {}
+    let ids = [];
+    try { ids = stored ? JSON.parse(stored) : []; } catch (_) { ids = []; }
+    if (!Array.isArray(ids)) ids = [];
+    const valid = new Set(QUIZ_QUESTIONS.map(function (q) { return q.id; }));
+    const seen = new Set(ids.filter(function (id) { return valid.has(id); }));
+    if (seen.size >= QUIZ_QUESTIONS.length) seen.clear();
+    return seen;
+}
+
+function mark_seen(id) {
+    if (!id) return;
+    const seen = load_seen();
+    if (seen.has(id)) return;
+    seen.add(id);
+    try {
+        localStorage.setItem(SEEN_STORAGE_KEY, JSON.stringify(Array.from(seen)));
+    } catch (_) {}
+}
+
+// Monta a rodada: pega uma cota por nível de dificuldade (preferindo perguntas
+// ainda não vistas) e embaralha tudo, para a ordem não ser previsível.
+function build_round() {
+    const total = round_total();
+    const seen = load_seen();
+    const picked = [];
+    const picked_ids = new Set();
+
+    function add_from(list, quota) {
+        const ordered = list
+            .filter(function (q) { return !seen.has(q.id); })
+            .concat(list.filter(function (q) { return seen.has(q.id); }));
+        let count = 0;
+        for (const q of ordered) {
+            if (count >= quota || picked.length >= total) break;
+            if (picked_ids.has(q.id)) continue;
+            picked.push(q);
+            picked_ids.add(q.id);
+            count++;
+        }
     }
-    for (const level of order) {
-        if (state.pools[level].length > 0) return state.pools[level].shift();
+
+    DIFFICULTY_ORDER.forEach(function (level) {
+        const list = QUIZ_QUESTIONS.filter(function (q) { return q.difficulty === level; });
+        add_from(shuffle(list), DIFFICULTY_QUOTA[level]);
+    });
+
+    // Se algum nível tinha menos perguntas que a cota, completa com o restante.
+    if (picked.length < total) {
+        add_from(shuffle(QUIZ_QUESTIONS), total - picked.length);
     }
-    return null;
+
+    return shuffle(picked);
 }
 
 function fresh_state() {
     return {
         screen: "start",
-        pools: build_pools(),
-        level: 0,             // índice em DIFFICULTY_ORDER (0 = easy)
+        queue: [],            // perguntas da rodada, já embaralhadas
+        index: 0,             // posição atual dentro da rodada
         current: null,        // pergunta atual
         asked: 0,             // quantas perguntas já foram apresentadas na rodada
-        last_result: null,    // "correct" | "wrong" | "skip" — ajusta a dificuldade
         score: 0,
         skips_left: SKIPS_TOTAL,
         helps_left: HELPS_TOTAL,
@@ -159,6 +193,7 @@ function set_current(question) {
         ? shuffle(question.options.map(function (_, i) { return i; }))
         : [];
     state.eliminated = [];
+    if (question) mark_seen(question.id);
 }
 
 // ------------------------------------------------------------------ tradução da tela
@@ -272,7 +307,7 @@ function render_media(question) {
 
 function render_question() {
     const question = current_question();
-    const total = round_total();
+    const total = state.queue.length;
 
     el.question_progress.textContent = t("questionOf", { current: state.asked, total: total });
     const answered_ratio = ((state.asked - 1) + (state.answered ? 1 : 0)) / total;
@@ -362,7 +397,7 @@ function render_question() {
 }
 
 function render_results() {
-    const total = round_total();
+    const total = state.queue.length;
     const percent = Math.round((state.score / total) * 100);
     el.result_score.textContent = percent + "%";
     el.result_correct.textContent = state.score + " / " + total;
@@ -377,7 +412,6 @@ function answer(option_index) {
     state.answered = true;
     state.selected = option_index;
     const is_correct = state.option_order[option_index] === current_question().correct;
-    state.last_result = is_correct ? "correct" : "wrong";
     if (is_correct) state.score++;
     render_question();
 }
@@ -386,7 +420,6 @@ function skip() {
     if (state.answered || state.skips_left <= 0) return;
     state.skips_left--;
     state.skips_used++;
-    state.last_result = "skip";
     advance();
 }
 
@@ -406,30 +439,16 @@ function eliminate() {
 }
 
 function advance() {
-    // ajusta a dificuldade com base no resultado da última pergunta
-    if (state.last_result === "correct") {
-        state.level = Math.min(state.level + 1, DIFFICULTY_ORDER.length - 1);
-    } else if (state.last_result === "wrong") {
-        state.level = Math.max(state.level - 1, 0);
-    }
-
     state.answered = false;
     state.selected = null;
-    state.last_result = null;
 
-    if (state.asked >= round_total()) {
+    state.index++;
+    if (state.index >= state.queue.length) {
         state.screen = "results";
         render();
         return;
     }
-
-    const q = pick_next();
-    if (!q) {
-        state.screen = "results";
-        render();
-        return;
-    }
-    set_current(q);
+    set_current(state.queue[state.index]);
     state.asked++;
     render();
 }
@@ -441,7 +460,9 @@ function next() {
 function start() {
     if (!questions_ready || QUIZ_QUESTIONS.length === 0) return;
     state = fresh_state();
-    set_current(pick_next());
+    state.queue = build_round();
+    state.index = 0;
+    set_current(state.queue[0]);
     state.asked = 1;
     state.screen = "play";
     render();
