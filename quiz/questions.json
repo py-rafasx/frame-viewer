@@ -1494,7 +1494,7 @@
         "id": "community-2",
         "category": "story",
         "difficulty": "medium",
-        "image": "img/1000.png",
+        "image": "img/1000.webp",
         "imageAlt": {
             "en": "Image for the question",
             "pt-BR": "Imagem da pergunta",
@@ -1529,5 +1529,785 @@
             }
         ],
         "correct": 3
+    },
+    {
+        "id": "manga-author",
+        "category": "trivia",
+        "difficulty": "easy",
+        "question": {
+            "en": "Who wrote the story of Frieren: Beyond Journey's End?",
+            "pt-BR": "Quem escreveu a história de Frieren e a Jornada para o Além?",
+            "es": "¿Quién escribió la historia de Frieren: Beyond Journey's End?"
+        },
+        "options": [
+            {
+                "en": "Kanehito Yamada",
+                "pt-BR": "Kanehito Yamada",
+                "es": "Kanehito Yamada"
+            },
+            {
+                "en": "Tsukasa Abe",
+                "pt-BR": "Tsukasa Abe",
+                "es": "Tsukasa Abe"
+            },
+            {
+                "en": "Keiichirō Saitō",
+                "pt-BR": "Keiichirō Saitō",
+                "es": "Keiichirō Saitō"
+            },
+            {
+                "en": "Evan Call",
+                "pt-BR": "Evan Call",
+                "es": "Evan Call"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "anime-studio",
+        "category": "trivia",
+        "difficulty": "easy",
+        "question": {
+            "en": "Which animation studio produced the Frieren anime?",
+            "pt-BR": "Qual estúdio de animação produziu o anime de Frieren?",
+            "es": "¿Qué estudio de animación produjo el anime de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Madhouse",
+                "pt-BR": "Madhouse",
+                "es": "Madhouse"
+            },
+            {
+                "en": "MAPPA",
+                "pt-BR": "MAPPA",
+                "es": "MAPPA"
+            },
+            {
+                "en": "Ufotable",
+                "pt-BR": "Ufotable",
+                "es": "Ufotable"
+            },
+            {
+                "en": "Wit Studio",
+                "pt-BR": "Wit Studio",
+                "es": "Wit Studio"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "manga-illustrator",
+        "category": "trivia",
+        "difficulty": "medium",
+        "question": {
+            "en": "Who illustrates the Frieren manga?",
+            "pt-BR": "Quem ilustra o mangá de Frieren?",
+            "es": "¿Quién ilustra el manga de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Tsukasa Abe",
+                "pt-BR": "Tsukasa Abe",
+                "es": "Tsukasa Abe"
+            },
+            {
+                "en": "Kanehito Yamada",
+                "pt-BR": "Kanehito Yamada",
+                "es": "Kanehito Yamada"
+            },
+            {
+                "en": "Reiko Nagasawa",
+                "pt-BR": "Reiko Nagasawa",
+                "es": "Reiko Nagasawa"
+            },
+            {
+                "en": "Tomohiro Suzuki",
+                "pt-BR": "Tomohiro Suzuki",
+                "es": "Tomohiro Suzuki"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "manga-magazine",
+        "category": "trivia",
+        "difficulty": "medium",
+        "question": {
+            "en": "In which magazine has the Frieren manga been serialized since 2020?",
+            "pt-BR": "Em qual revista o mangá de Frieren é publicado desde 2020?",
+            "es": "¿En qué revista se publica el manga de Frieren desde 2020?"
+        },
+        "options": [
+            {
+                "en": "Weekly Shōnen Sunday",
+                "pt-BR": "Weekly Shōnen Sunday",
+                "es": "Weekly Shōnen Sunday"
+            },
+            {
+                "en": "Weekly Shōnen Jump",
+                "pt-BR": "Weekly Shōnen Jump",
+                "es": "Weekly Shōnen Jump"
+            },
+            {
+                "en": "Monthly Shōnen Magazine",
+                "pt-BR": "Monthly Shōnen Magazine",
+                "es": "Monthly Shōnen Magazine"
+            },
+            {
+                "en": "Big Comic Spirits",
+                "pt-BR": "Big Comic Spirits",
+                "es": "Big Comic Spirits"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "anime-opening",
+        "category": "trivia",
+        "difficulty": "medium",
+        "question": {
+            "en": "Which musical duo performs the first season's opening theme, 'Yūsha'?",
+            "pt-BR": "Qual dupla musical interpreta o tema de abertura da primeira temporada, 'Yūsha'?",
+            "es": "¿Qué dúo musical interpreta el tema de apertura de la primera temporada, 'Yūsha'?"
+        },
+        "options": [
+            {
+                "en": "Yoasobi",
+                "pt-BR": "Yoasobi",
+                "es": "Yoasobi"
+            },
+            {
+                "en": "Yorushika",
+                "pt-BR": "Yorushika",
+                "es": "Yorushika"
+            },
+            {
+                "en": "Milet",
+                "pt-BR": "Milet",
+                "es": "Milet"
+            },
+            {
+                "en": "LiSA",
+                "pt-BR": "LiSA",
+                "es": "LiSA"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "anime-composer",
+        "category": "trivia",
+        "difficulty": "hard",
+        "question": {
+            "en": "Who composed the music for the Frieren anime?",
+            "pt-BR": "Quem compôs a trilha sonora do anime de Frieren?",
+            "es": "¿Quién compuso la banda sonora del anime de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Evan Call",
+                "pt-BR": "Evan Call",
+                "es": "Evan Call"
+            },
+            {
+                "en": "Yuki Kajiura",
+                "pt-BR": "Yuki Kajiura",
+                "es": "Yuki Kajiura"
+            },
+            {
+                "en": "Hiroyuki Sawano",
+                "pt-BR": "Hiroyuki Sawano",
+                "es": "Hiroyuki Sawano"
+            },
+            {
+                "en": "Kevin Penkin",
+                "pt-BR": "Kevin Penkin",
+                "es": "Kevin Penkin"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "anime-director",
+        "category": "trivia",
+        "difficulty": "hard",
+        "question": {
+            "en": "Who directed the first season of the Frieren anime?",
+            "pt-BR": "Quem dirigiu a primeira temporada do anime de Frieren?",
+            "es": "¿Quién dirigió la primera temporada del anime de Frieren?"
+        },
+        "options": [
+            {
+                "en": "Keiichirō Saitō",
+                "pt-BR": "Keiichirō Saitō",
+                "es": "Keiichirō Saitō"
+            },
+            {
+                "en": "Tomoya Kitagawa",
+                "pt-BR": "Tomoya Kitagawa",
+                "es": "Tomoya Kitagawa"
+            },
+            {
+                "en": "Tomohiro Suzuki",
+                "pt-BR": "Tomohiro Suzuki",
+                "es": "Tomohiro Suzuki"
+            },
+            {
+                "en": "Reiko Nagasawa",
+                "pt-BR": "Reiko Nagasawa",
+                "es": "Reiko Nagasawa"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "frieren-returns",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "How many years after their victory does Frieren return to visit Himmel?",
+            "pt-BR": "Quantos anos após a vitória Frieren retorna para visitar Himmel?",
+            "es": "¿Cuántos años después de su victoria vuelve Frieren a visitar a Himmel?"
+        },
+        "options": [
+            {
+                "en": "50 years",
+                "pt-BR": "50 anos",
+                "es": "50 años"
+            },
+            {
+                "en": "10 years",
+                "pt-BR": "10 anos",
+                "es": "10 años"
+            },
+            {
+                "en": "100 years",
+                "pt-BR": "100 anos",
+                "es": "100 años"
+            },
+            {
+                "en": "5 years",
+                "pt-BR": "5 anos",
+                "es": "5 años"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "hero-party-size",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "How many members made up the Hero Party that defeated the Demon King?",
+            "pt-BR": "Quantos membros tinha o Grupo do Herói que derrotou o Rei Demônio?",
+            "es": "¿Cuántos miembros formaban el Grupo del Héroe que derrotó al Rey Demonio?"
+        },
+        "options": [
+            {
+                "en": "Four",
+                "pt-BR": "Quatro",
+                "es": "Cuatro"
+            },
+            {
+                "en": "Three",
+                "pt-BR": "Três",
+                "es": "Tres"
+            },
+            {
+                "en": "Five",
+                "pt-BR": "Cinco",
+                "es": "Cinco"
+            },
+            {
+                "en": "Six",
+                "pt-BR": "Seis",
+                "es": "Seis"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "frieren-epithet",
+        "category": "story",
+        "difficulty": "medium",
+        "question": {
+            "en": "By what epithet is Frieren also known?",
+            "pt-BR": "Por qual epíteto Frieren também é conhecida?",
+            "es": "¿Por qué epíteto también se conoce a Frieren?"
+        },
+        "options": [
+            {
+                "en": "Frieren the Slayer",
+                "pt-BR": "Frieren, a Ceifadora",
+                "es": "Frieren, la Segadora"
+            },
+            {
+                "en": "Frieren the Wise",
+                "pt-BR": "Frieren, a Sábia",
+                "es": "Frieren, la Sabia"
+            },
+            {
+                "en": "Frieren the Brave",
+                "pt-BR": "Frieren, a Corajosa",
+                "es": "Frieren, la Valiente"
+            },
+            {
+                "en": "Frieren the Immortal",
+                "pt-BR": "Frieren, a Imortal",
+                "es": "Frieren, la Inmortal"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "stark-master",
+        "category": "characters",
+        "difficulty": "hard",
+        "question": {
+            "en": "Who trained Stark as a warrior?",
+            "pt-BR": "Quem treinou Stark como guerreiro?",
+            "es": "¿Quién entrenó a Stark como guerrero?"
+        },
+        "options": [
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "mana-teacher",
+        "category": "magic",
+        "difficulty": "hard",
+        "question": {
+            "en": "Who taught Frieren the technique of suppressing her mana?",
+            "pt-BR": "Quem ensinou a Frieren a técnica de suprimir sua mana?",
+            "es": "¿Quién le enseñó a Frieren la técnica de suprimir su mana?"
+        },
+        "options": [
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Qual",
+                "pt-BR": "Qual",
+                "es": "Qual"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "flamme-notes",
+        "category": "places",
+        "difficulty": "hard",
+        "question": {
+            "en": "In which region did Frieren find the Great Mage Flamme's notes?",
+            "pt-BR": "Em qual região Frieren encontrou as anotações da Grande Maga Flamme?",
+            "es": "¿En qué región encontró Frieren las notas de la Gran Maga Flamme?"
+        },
+        "options": [
+            {
+                "en": "Voll Basin",
+                "pt-BR": "Bacia de Voll",
+                "es": "Cuenca de Voll"
+            },
+            {
+                "en": "Größe Forest",
+                "pt-BR": "Floresta de Größe",
+                "es": "Bosque de Größe"
+            },
+            {
+                "en": "Äußerst",
+                "pt-BR": "Äußerst",
+                "es": "Äußerst"
+            },
+            {
+                "en": "Riegel Canyon",
+                "pt-BR": "Cânion de Riegel",
+                "es": "Cañón de Riegel"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "img-frieren",
+        "category": "characters",
+        "difficulty": "easy",
+        "image": "img/Frieren.webp",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            },
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-fern",
+        "category": "characters",
+        "difficulty": "easy",
+        "image": "img/Fern.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Übel",
+                "pt-BR": "Übel",
+                "es": "Übel"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            },
+            {
+                "en": "Methode",
+                "pt-BR": "Methode",
+                "es": "Methode"
+            },
+            {
+                "en": "Lawine",
+                "pt-BR": "Lawine",
+                "es": "Lawine"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-stark",
+        "category": "characters",
+        "difficulty": "easy",
+        "image": "img/Stark.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            },
+            {
+                "en": "Denken",
+                "pt-BR": "Denken",
+                "es": "Denken"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "img-himmel",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Himmel.avif",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            },
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-eisen",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Eisen.webp",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            }
+        ],
+        "correct": 0
+    },
+    {
+        "id": "img-heiter",
+        "category": "characters",
+        "difficulty": "medium",
+        "image": "img/Heiter.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Sein",
+                "pt-BR": "Sein",
+                "es": "Sein"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Eisen",
+                "pt-BR": "Eisen",
+                "es": "Eisen"
+            },
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            }
+        ],
+        "correct": 3
+    },
+    {
+        "id": "img-flamme",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Flamme.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Frieren",
+                "pt-BR": "Frieren",
+                "es": "Frieren"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Flamme",
+                "pt-BR": "Flamme",
+                "es": "Flamme"
+            },
+            {
+                "en": "Fern",
+                "pt-BR": "Fern",
+                "es": "Fern"
+            }
+        ],
+        "correct": 2
+    },
+    {
+        "id": "img-aura",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Aura.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Linie",
+                "pt-BR": "Linie",
+                "es": "Linie"
+            },
+            {
+                "en": "Aura",
+                "pt-BR": "Aura",
+                "es": "Aura"
+            },
+            {
+                "en": "Serie",
+                "pt-BR": "Serie",
+                "es": "Serie"
+            },
+            {
+                "en": "Übel",
+                "pt-BR": "Übel",
+                "es": "Übel"
+            }
+        ],
+        "correct": 1
+    },
+    {
+        "id": "img-sein",
+        "category": "characters",
+        "difficulty": "hard",
+        "image": "img/Sein.jpg",
+        "imageAlt": {
+            "en": "Character portrait from Frieren",
+            "pt-BR": "Retrato de personagem de Frieren",
+            "es": "Retrato de un personaje de Frieren"
+        },
+        "question": {
+            "en": "Which character is shown in the image?",
+            "pt-BR": "Qual personagem aparece na imagem?",
+            "es": "¿Qué personaje aparece en la imagen?"
+        },
+        "options": [
+            {
+                "en": "Heiter",
+                "pt-BR": "Heiter",
+                "es": "Heiter"
+            },
+            {
+                "en": "Himmel",
+                "pt-BR": "Himmel",
+                "es": "Himmel"
+            },
+            {
+                "en": "Sein",
+                "pt-BR": "Sein",
+                "es": "Sein"
+            },
+            {
+                "en": "Stark",
+                "pt-BR": "Stark",
+                "es": "Stark"
+            }
+        ],
+        "correct": 2
     }
 ]
